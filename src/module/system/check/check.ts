@@ -121,7 +121,6 @@ class CheckPF2e {
 
         const substitutions = context.substitutions ?? [];
 
-
         // Acquire the d20 roll expression and resolve fortune/misfortune effects
         const [dice, tagsFromDice] = ((): [string, string[]] => {
             const substitution = substitutions.find((s) => s.selected);
