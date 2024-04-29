@@ -114,7 +114,13 @@ class CheckPF2e {
         const extraTags: string[] = [];
         const isReroll = context.isReroll ?? false;
         if (isReroll) context.rollTwice = false;
+
+        const isflat = context.type === "flat-check";
+        const droll = isflat ? "1d20" : "3d6";
+        const tdroll = isflat ? "2d20" : "{3d6,3d6}";
+
         const substitutions = context.substitutions ?? [];
+
 
         // Acquire the d20 roll expression and resolve fortune/misfortune effects
         const [dice, tagsFromDice] = ((): [string, string[]] => {
@@ -139,7 +145,7 @@ class CheckPF2e {
                     check.calculateTotal(rollOptions);
                 }
 
-                return ["1d20", ["PF2E.TraitFortune", "PF2E.TraitMisfortune"]];
+                return [droll, ["PF2E.TraitFortune", "PF2E.TraitMisfortune"]];
             } else if (substitution) {
                 const effectType = {
                     fortune: "PF2E.TraitFortune",
@@ -152,11 +158,11 @@ class CheckPF2e {
 
                 return [substitution.value.toString(), [extraTag]];
             } else if (context.rollTwice === "keep-lower") {
-                return ["2d20kl", ["PF2E.TraitMisfortune"]];
+                return [tdroll + "kl", ["PF2E.TraitMisfortune"]];
             } else if (context.rollTwice === "keep-higher") {
-                return ["2d20kh", ["PF2E.TraitFortune"]];
+                return [tdroll + "kh", ["PF2E.TraitFortune"]];
             } else {
-                return ["1d20", []];
+                return [droll, []];
             }
         })();
         extraTags.push(...tagsFromDice);
