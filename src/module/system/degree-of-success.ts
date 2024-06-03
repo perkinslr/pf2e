@@ -24,12 +24,15 @@ class DegreeOfSuccess {
     /** The check DC being rolled against */
     readonly dc: CheckDC;
 
+    readonly isFlat: boolean = false;
+
     constructor(
         roll: Rolled<CheckRoll> | RollBrief,
         dc: CheckDC | number,
         dosAdjustments: DegreeAdjustmentsRecord | null = null,
-        isFlat: bool = false,
+        isFlat: boolean = false,
     ) {
+        this.isFlat = isFlat;
         if (roll instanceof Roll) {
             this.dieResult =
                 (roll.isDeterministic
