@@ -103,6 +103,9 @@ class DegreeOfSuccess {
      * @return The new success value
      */
     #adjustDegreeByDieValue(degree: DegreeOfSuccessIndex): DegreeOfSuccessIndex {
+        console.log(this.isFlat);
+        console.log(this.dieResult);
+        console.log(this.dc.value);
         if ((this.dieResult === 20 && this.isFlat) || (!this.isFlat && this.dieResult > 17)) {
             return this.#adjustDegreeOfSuccess(DEGREE_ADJUSTMENT_AMOUNTS.INCREASE, degree);
         } else if ((this.dieResult === 1 && this.isFlat) || (!this.isFlat && this.dieResult < 4)) {
