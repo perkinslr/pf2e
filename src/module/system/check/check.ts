@@ -215,7 +215,7 @@ class CheckPF2e {
                     }, {} as DegreeAdjustmentsRecord) ?? {}
             );
         })();
-        const degree = context.dc ? new DegreeOfSuccess(roll, context.dc, dosAdjustments, isFlat) : null;
+        const degree = context.dc ? new DegreeOfSuccess(roll, context.dc, dosAdjustments, isflat) : null;
 
         if (degree) {
             context.outcome = DEGREE_OF_SUCCESS_STRINGS[degree.value];
