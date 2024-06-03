@@ -27,12 +27,13 @@ class DegreeOfSuccess {
         roll: Rolled<CheckRoll> | RollBrief,
         dc: CheckDC | number,
         dosAdjustments: DegreeAdjustmentsRecord | null = null,
+        isFlat: bool = false,
     ) {
         if (roll instanceof Roll) {
             this.dieResult =
                 (roll.isDeterministic
                     ? roll.terms.find((t): t is NumericTerm => t instanceof NumericTerm)
-                    : roll.dice.find((d): d is Die => d instanceof Die && d.faces === 20)
+                    : roll.dice.find((d): d is Die => d instanceof Die && (isFlat && d.faces === 20) || (!isFlat && (d.faces == 6 && d.number == 3)))
                 )?.total ?? 1;
             this.rollTotal = roll.total;
         } else {
@@ -99,9 +100,9 @@ class DegreeOfSuccess {
      * @return The new success value
      */
     #adjustDegreeByDieValue(degree: DegreeOfSuccessIndex): DegreeOfSuccessIndex {
-        if (this.dieResult === 20) {
+        if ((this.dieResult === 20 && this.isFlat) || (!this.isFlat && this.dieResult > 17)) {
             return this.#adjustDegreeOfSuccess(DEGREE_ADJUSTMENT_AMOUNTS.INCREASE, degree);
-        } else if (this.dieResult === 1) {
+        } else if ((this.dieResult === 1 && this.isFlat) || (!this.isFlat && this.dieResult < 4)) {
             return this.#adjustDegreeOfSuccess(DEGREE_ADJUSTMENT_AMOUNTS.LOWER, degree);
         }
 
