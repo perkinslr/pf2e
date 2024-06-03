@@ -120,6 +120,7 @@ class CheckPF2e {
 	const droll = isflat ? "1d20" : "3d6";
 	const tdroll = isflat ? "2d20" : "{3d6,3d6}";
 
+
         // Acquire the d20 roll expression and resolve fortune/misfortune effects
         const [dice, tagsFromDice] = ((): [string, string[]] => {
             const substitution = substitutions.find((s) => s.selected);
@@ -216,7 +217,7 @@ class CheckPF2e {
                     }, {} as DegreeAdjustmentsRecord) ?? {}
             );
         })();
-        const degree = context.dc ? new DegreeOfSuccess(roll, context.dc, dosAdjustments) : null;
+        const degree = context.dc ? new DegreeOfSuccess(roll, context.dc, dosAdjustments, isFlat) : null;
 
         if (degree) {
             context.outcome = DEGREE_OF_SUCCESS_STRINGS[degree.value];
@@ -550,7 +551,7 @@ class CheckPF2e {
                   parsedFlavor.innerHTML = oldFlavor;
                   const targeting = actor.uuid === context.origin?.actor;
                   const self = targeting ? context.origin : context.target;
-                  const opposer = context.target?.actor === actor.uuid ? context.origin : context.target;
+                  const opposer = context.target?.actor === actor.uuid ? context.target : context.origin;
                   const targetFlavor = await this.#createResultFlavor({ degree, self, opposer, targeting });
                   if (targetFlavor) {
                       htmlQuery(parsedFlavor, ".target-dc-result")?.replaceWith(targetFlavor);
