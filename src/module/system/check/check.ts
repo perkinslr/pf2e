@@ -121,11 +121,6 @@ class CheckPF2e {
         const tdroll = isflat ? "2d20" : "{3d6,3d6}";
 
         const substitutions = context.substitutions ?? [];
-	const isflat = context.type === "flat-check";
-	const droll = isflat ? "1d20" : "3d6";
-	const tdroll = isflat ? "2d20" : "{3d6,3d6}";
-
-
 
         // Acquire the d20 roll expression and resolve fortune/misfortune effects
         const [dice, tagsFromDice] = ((): [string, string[]] => {
