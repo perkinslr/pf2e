@@ -2,11 +2,11 @@
     "id": "pf2e",
     "title": "Pathfinder Second Edition",
     "description": "A community contributed game system for Pathfinder Second Edition",
-    "version": "5.15.1",
+    "version": "6.0.4",
     "license": "./LICENSE",
     "compatibility": {
-        "minimum": "11.315",
-        "verified": "11.315",
+        "minimum": "12.327",
+        "verified": "12.327",
         "maximum": "12"
     },
     "authors": [
@@ -27,6 +27,16 @@
     "styles": [
         "styles/pf2e.css"
     ],
+    "grid": {
+        "distance": 5,
+        "units": "ft",
+        "diagonals": 4
+    },
+    "documentTypes": {
+        "RegionBehavior": {
+            "environment": {}
+        }
+    },
     "packs": [
         {
             "name": "abomination-vaults-bestiary",
@@ -149,6 +159,19 @@
             "name": "hazards",
             "label": "Hazards (Rulebooks)",
             "path": "packs/hazards",
+            "type": "Actor",
+            "banner": "systems/pf2e/assets/compendium-banner/red.webp",
+            "system": "pf2e",
+            "ownership": {
+                "PLAYER": "LIMITED",
+                "ASSISTANT": "OWNER"
+            },
+            "flags": {}
+        },
+        {
+            "name": "howl-of-the-wild-bestiary",
+            "label": "Howl of the Wild",
+            "path": "packs/howl-of-the-wild-bestiary",
             "type": "Actor",
             "banner": "systems/pf2e/assets/compendium-banner/red.webp",
             "system": "pf2e",
@@ -1112,10 +1135,12 @@
         {
             "name": "Bestiaries",
             "sorting": "m",
+            "color": "#3b2524",
             "folders": [
                 {
                     "name": "Adventure Paths",
                     "sorting": "m",
+                    "color": "#573938",
                     "packs": [
                         "abomination-vaults-bestiary",
                         "age-of-ashes-bestiary",
@@ -1138,11 +1163,13 @@
                 {
                     "name": "Rulebooks",
                     "sorting": "m",
+                    "color": "#573938",
                     "packs": [
                         "pathfinder-dark-archive",
                         "book-of-the-dead-bestiary",
                         "rage-of-elements-bestiary",
                         "hazards",
+                        "howl-of-the-wild-bestiary",
                         "lost-omens-impossible-lands-bestiary",
                         "lost-omens-highhelm-bestiary",
                         "lost-omens-mwangi-expanse-bestiary",
@@ -1157,6 +1184,7 @@
                 {
                     "name": "Standalone Adventures",
                     "sorting": "m",
+                    "color": "#573938",
                     "packs": [
                         "fall-of-plaguestone-bestiary",
                         "malevolence-bestiary",
@@ -1174,6 +1202,7 @@
                 {
                     "name": "Pathfinder Society",
                     "sorting": "m",
+                    "color": "#573938",
                     "packs": [
                         "pfs-introductions-bestiary",
                         "pfs-season-1-bestiary",
@@ -1194,6 +1223,7 @@
         {
             "name": "Pregenerated PCs",
             "sorting": "m",
+            "color": "#3b2524",
             "packs": [
                 "iconics",
                 "paizo-pregens"
@@ -1202,6 +1232,7 @@
         {
             "name": "Effects",
             "sorting": "m",
+            "color": "#2f3339",
             "packs": [
                 "bestiary-effects",
                 "conditionitems",
@@ -1215,6 +1246,7 @@
         {
             "name": "Character Building",
             "sorting": "m",
+            "color": "#343c33",
             "packs": [
                 "actionspf2e",
                 "ancestries",
@@ -1234,6 +1266,7 @@
         {
             "name": "GM Tools",
             "sorting": "m",
+            "color": "#181818",
             "packs": [
                 "adventure-specific-actions",
                 "boons-and-curses",
@@ -1246,6 +1279,7 @@
         {
             "name": "Macros",
             "sorting": "m",
+            "color": "#181818",
             "packs": [
                 "action-macros",
                 "pf2e-macros"
@@ -1254,6 +1288,7 @@
         {
             "name": "Journals",
             "sorting": "m",
+            "color": "#181818",
             "packs": [
                 "criticaldeck",
                 "domains",

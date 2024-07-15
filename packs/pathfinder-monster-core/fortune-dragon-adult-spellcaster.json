@@ -35,23 +35,18 @@
                         "max": 5,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "UXhRdCeD24KiLJve"
                             },
                             {
-                                "expended": false,
                                 "id": "fSXx1F3KTQ0lj5y3"
                             },
                             {
-                                "expended": false,
                                 "id": "bfCmqGkO7Mq0VBy6"
                             },
                             {
-                                "expended": false,
                                 "id": "yP1sobpp0jueaTfr"
                             },
                             {
-                                "expended": false,
                                 "id": "AeGM73gujr3XzdlY"
                             }
                         ]
@@ -60,15 +55,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "UpMaDc5OXfBP42h0"
                             },
                             {
-                                "expended": false,
                                 "id": "jmum6UP8IokM7oii"
                             },
                             {
-                                "expended": false,
                                 "id": "4UG2WyiiuWsJSDXb"
                             }
                         ]
@@ -77,15 +69,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "Al0q3dRAw6xGpvxQ"
                             },
                             {
-                                "expended": false,
                                 "id": "AeCgD25jAOJ4ATy2"
                             },
                             {
-                                "expended": false,
                                 "id": "a0yVJXrT99kS8yl0"
                             }
                         ]
@@ -94,15 +83,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "BgQuJ5pFdy5m2oAz"
                             },
                             {
-                                "expended": false,
                                 "id": "TAIePGKkbdsAqqsw"
                             },
                             {
-                                "expended": false,
                                 "id": "iEyh7TrbeG9FAim3"
                             }
                         ]
@@ -111,15 +97,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "Cb4x10m7k4Hg6AOf"
                             },
                             {
-                                "expended": false,
                                 "id": "f0Lm4S2YI2J0p3RM"
                             },
                             {
-                                "expended": false,
                                 "id": "ShYGQi5jE69enUX6"
                             }
                         ]
@@ -128,15 +111,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "iKUCkMqcsSPhJ8bW"
                             },
                             {
-                                "expended": false,
                                 "id": "MjTYU8T6VZFj9ifd"
                             },
                             {
-                                "expended": false,
                                 "id": "1JBajhuBTjboLTuR"
                             }
                         ]
@@ -145,15 +125,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "QYiBNSRozrl4LK67"
                             },
                             {
-                                "expended": false,
                                 "id": "WaZf96tPqhFHt1tJ"
                             },
                             {
-                                "expended": false,
                                 "id": "Ldv2DSoLPUb8SLJk"
                             }
                         ]
@@ -403,7 +380,7 @@
                     }
                 },
                 "description": {
-                    "value": "<p>You transform the target creature into a harmless animal appropriate to the area, with effects based on its Fortitude save.</p>\n<hr />\n<p><strong>Critical Success</strong> The target is unaffected.</p>\n<p><strong>Success</strong> The target's body gains minor features of the harmless animal. Its insides churn as they partially transform, causing it to be @UUID[Compendium.pf2e.conditionitems.Item.Sickened]{Sickened 1}. When it recovers from the Sickened condition, its features revert to normal.</p>\n<p><strong>Failure</strong> The target transforms for 1 minute but keeps its mind. If it spends all its actions on its turn concentrating on its original form, it can attempt a Will save to end the effect immediately.</p>\n<p><strong>Critical Failure</strong> The target is transformed into the chosen harmless animal, body and mind, for an unlimited duration.</p>"
+                    "value": "<p>You transform the target creature into a harmless animal appropriate to the area, with effects based on its Fortitude save.</p>\n<hr />\n<p><strong>Critical Success</strong> The target is unaffected.</p>\n<p><strong>Success</strong> The target's body gains minor features of the harmless animal. Its insides churn as they partially transform, causing it to be @UUID[Compendium.pf2e.conditionitems.Item.Sickened]{Sickened 1}. When it recovers from the sickened condition, its features revert to normal.</p>\n<p><strong>Failure</strong> The target transforms for 1 minute but keeps its mind. If it spends all its actions on its turn concentrating on its original form, it can attempt a @Check[type:will] save to end the effect immediately.</p>\n<p><strong>Critical Failure</strong> The target is transformed into the chosen harmless animal, body and mind, for an unlimited duration.</p>"
                 },
                 "duration": {
                     "sustained": false,
@@ -436,6 +413,7 @@
                     "rarity": "common",
                     "traditions": [
                         "arcane",
+                        "occult",
                         "primal"
                     ],
                     "value": [
@@ -2196,7 +2174,7 @@
                 "damage": {},
                 "defense": null,
                 "description": {
-                    "value": "<p>You summon a @UUID[Compendium.pf2e.pathfinder-bestiary.Actor.Phantasmal Minion]. The minion is roughly the shape of a humanoid. You can choose to have it be @UUID[Compendium.pf2e.conditionitems.Item.Invisible] or have an ephemeral appearance, but it's obviously a magical effect, not a real creature.</p>\n<div class=\"notranslate\" style=\"all:initial\"> </div>"
+                    "value": "<p>You summon a @UUID[Compendium.pf2e.pathfinder-bestiary.Actor.Phantasmal Minion]. The minion is roughly the shape of a humanoid. You can choose to have it be @UUID[Compendium.pf2e.conditionitems.Item.Invisible] or have an ephemeral appearance, but it's obviously a magical effect, not a real creature.</p>"
                 },
                 "duration": {
                     "sustained": true,
@@ -2259,7 +2237,7 @@
                 "damage": {},
                 "defense": null,
                 "description": {
-                    "value": "<p>The simplest magic does your bidding. You can perform simple magical effects for as long as you Sustain the spell. Each time you Sustain the spell, you can choose one of four options.</p>\n<ul>\n<li><strong>Cook</strong> Cool, warm, or flavor 1 pound of nonliving material.</li>\n<li><strong>Lift</strong> <strong>Slowly</strong> lift an unattended object of light Bulk or less 1 foot off the ground.</li>\n<li><strong>Make</strong> Create a temporary object of negligible Bulk, made of congealed magical substance. The object looks crude and artificial and is extremely fragile-it can't be used as a tool, weapon, or locus or cost for a spell.</li>\n<li><strong>Tidy</strong> Color, clean, or soil an object of light Bulk or less. You can affect an object of 1 Bulk with 10 rounds of concentration, and a larger object a 1 minute per Bulk.</li>\n</ul>\n<p><em>Prestidigitation </em>can't deal damage or cause adverse conditions. Any actual change to an object (beyond what is noted above) persists only as long as you Sustain the spell.</p>"
+                    "value": "<p>The simplest magic does your bidding. You can perform simple magical effects for as long as you Sustain the spell. Each time you Sustain the spell, you can choose one of four options.</p>\n<ul>\n<li><strong>Cook</strong> Cool, warm, or flavor 1 pound of nonliving material.</li>\n<li><strong>Lift</strong> Slowly lift an unattended object of light Bulk or less 1 foot off the ground.</li>\n<li><strong>Make</strong> Create a temporary object of negligible Bulk, made of congealed magical substance. The object looks crude and artificial and is extremely fragile-it can't be used as a tool, weapon, or locus or cost for a spell.</li>\n<li><strong>Tidy</strong> Color, clean, or soil an object of light Bulk or less. You can affect an object of 1 Bulk with 10 rounds of concentration, and a larger object a 1 minute per Bulk.</li>\n</ul>\n<p><em>Prestidigitation </em>can't deal damage or cause adverse conditions. Any actual change to an object (beyond what is noted above) persists only as long as you Sustain the spell.</p>"
                 },
                 "duration": {
                     "sustained": true,

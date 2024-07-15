@@ -1,4 +1,3 @@
-import { SkillAbbreviation } from "@actor/creature/data.ts";
 import { CreatureSheetData, Language } from "@actor/creature/index.ts";
 import type { Sense } from "@actor/creature/sense.ts";
 import { isReallyPC } from "@actor/helpers.ts";
@@ -6,7 +5,7 @@ import { MODIFIER_TYPES, createProficiencyModifier } from "@actor/modifiers.ts";
 import { SheetClickActionHandlers } from "@actor/sheet/base.ts";
 import { ActorSheetDataPF2e, InventoryItem } from "@actor/sheet/data-types.ts";
 import { condenseSenses } from "@actor/sheet/helpers.ts";
-import { AttributeString, SaveType } from "@actor/types.ts";
+import { AttributeString, SaveType, SkillSlug } from "@actor/types.ts";
 import { ATTRIBUTE_ABBREVIATIONS } from "@actor/values.ts";
 import type {
     AncestryPF2e,
@@ -364,7 +363,7 @@ class CharacterSheetPF2e<TActor extends CharacterPF2e> extends CreatureSheetPF2e
                     .localize(skillA.label ?? "")
                     .localeCompare(game.i18n.localize(skillB.label ?? ""), game.i18n.lang),
             ),
-        ) as Record<SkillAbbreviation, CharacterSkillData>;
+        ) as Record<SkillSlug, CharacterSkillData>;
 
         sheetData.tabVisibility = fu.deepClone(actor.flags.pf2e.sheetTabs);
 
@@ -545,7 +544,7 @@ class CharacterSheetPF2e<TActor extends CharacterPF2e> extends CreatureSheetPF2e
 
     protected override prepareInventoryItem(item: PhysicalItemPF2e): InventoryItem {
         const data = super.prepareInventoryItem(item);
-        data.isInvestable = !item.isInContainer && item.isIdentified && item.isInvested !== null;
+        data.isInvestable = !item.isStowed && item.isIdentified && item.isInvested !== null;
 
         // If armor is equipped, and can be invested, hint at the user that it should be invested
         const invested = this.actor.inventory.invested;
@@ -1268,7 +1267,7 @@ class CharacterSheetPF2e<TActor extends CharacterPF2e> extends CreatureSheetPF2e
 
             switch (button.dataset.action) {
                 case "roll-attack": {
-                    const mapIncreases = Math.clamped(Number(button.dataset.mapIncreases) || 0, 0, 2);
+                    const mapIncreases = Math.clamp(Number(button.dataset.mapIncreases) || 0, 0, 2);
                     await blast.attack({ mapIncreases, element, damageType, melee, event });
                     break;
                 }
@@ -1339,11 +1338,11 @@ class CharacterSheetPF2e<TActor extends CharacterPF2e> extends CreatureSheetPF2e
         const newValue = ((): number | undefined => {
             if (item.isOfType("spellcastingEntry")) {
                 const dispatch: Record<string, () => number> = {
-                    "system.proficiency.value": () => Math.clamped(selectedValue, 0, 4),
+                    "system.proficiency.value": () => Math.clamp(selectedValue, 0, 4),
                 };
                 return dispatch[propertyKey]?.();
             } else if (item.isOfType("lore")) {
-                return Math.clamped(selectedValue, 0, 4);
+                return Math.clamp(selectedValue, 0, 4);
             } else {
                 throw ErrorPF2e("Item not recognized");
             }
@@ -1372,12 +1371,12 @@ class CharacterSheetPF2e<TActor extends CharacterPF2e> extends CreatureSheetPF2e
             if (item.isOfType("spellcastingEntry")) {
                 const proficiencyRank = item.system.proficiency.value;
                 const dispatch: Record<string, () => number> = {
-                    "system.proficiency.value": () => Math.clamped(proficiencyRank + change, 0, 4),
+                    "system.proficiency.value": () => Math.clamp(proficiencyRank + change, 0, 4),
                 };
                 return dispatch[propertyKey]?.();
             } else if (item.isOfType("lore")) {
                 const currentRank = item.system.proficient.value;
-                return Math.clamped(currentRank + change, 0, 4);
+                return Math.clamp(currentRank + change, 0, 4);
             } else {
                 throw ErrorPF2e("Item not recognized");
             }

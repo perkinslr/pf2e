@@ -23,14 +23,16 @@ class CompendiumDirectoryPF2e extends CompendiumDirectory {
                       },
                   };
         this.#searchEngine = new MiniSearch({
-            fields: ["name"],
+            fields: ["name", "originalName"],
             idField: "uuid",
             processTerm: (term): string[] | null => {
                 if (term.length <= 1 || CompendiumDirectoryPF2e.STOP_WORDS.has(term)) {
                     return null;
                 }
                 return Array.from(wordSegmenter.segment(term))
-                    .map((t) => t.segment.toLocaleLowerCase(game.i18n.lang).replace(/['"]/g, ""))
+                    .map((t) =>
+                        SearchFilter.cleanQuery(t.segment.toLocaleLowerCase(game.i18n.lang)).replace(/['"]/g, ""),
+                    )
                     .filter((t) => t.length > 1);
             },
             searchOptions: { combineWith: "AND", prefix: true },

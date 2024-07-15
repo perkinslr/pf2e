@@ -6,7 +6,7 @@ import { ActorSheetPF2e } from "@actor/sheet/base.ts";
 import { ActorSheetDataPF2e, ActorSheetRenderOptionsPF2e } from "@actor/sheet/data-types.ts";
 import { condenseSenses } from "@actor/sheet/helpers.ts";
 import { DistributeCoinsPopup } from "@actor/sheet/popups/distribute-coins-popup.ts";
-import { SKILL_LONG_FORMS } from "@actor/values.ts";
+import { SKILL_SLUGS } from "@actor/values.ts";
 import { ItemPF2e } from "@item";
 import { ItemSourcePF2e } from "@item/base/data/index.ts";
 import { Bulk } from "@item/physical/index.ts";
@@ -16,7 +16,6 @@ import { ValueAndMax, ZeroToFour } from "@module/data.ts";
 import { SheetOptions, createSheetTags } from "@module/sheet/helpers.ts";
 import { eventToRollParams } from "@scripts/sheet-util.ts";
 import { SocketMessage } from "@scripts/socket.ts";
-import { InlineRollLinks } from "@scripts/ui/inline-roll-links.ts";
 import { SettingsMenuOptions } from "@system/settings/menu.ts";
 import { createHTMLElement, htmlClosest, htmlQuery, htmlQueryAll, signedInteger } from "@util";
 import * as R from "remeda";
@@ -88,6 +87,8 @@ class PartySheetPF2e extends ActorSheetPF2e<PartyPF2e> {
                 ? { enabled: this.actor.inventory.coins.copperValue > 0 && members.some(isReallyPC) }
                 : null;
 
+        const travelSpeed = this.actor.system.attributes.speed.total;
+
         return {
             ...base,
             playerRestricted: !game.pf2e.settings.metagame.partyStats,
@@ -107,7 +108,10 @@ class PartySheetPF2e extends ActorSheetPF2e<PartyPF2e> {
             },
             canDistributeCoins,
             explorationSummary: {
-                speed: this.actor.system.attributes.speed.total,
+                speed: travelSpeed,
+                feetPerMinute: travelSpeed * 10,
+                milesPerHour: travelSpeed / 10,
+                milesPerDay: travelSpeed * 0.8,
                 activities:
                     Object.entries(CONFIG.PF2E.hexplorationActivities).find(
                         ([max]) => Number(max) >= this.actor.system.attributes.speed.total,
@@ -230,7 +234,7 @@ class PartySheetPF2e extends ActorSheetPF2e<PartyPF2e> {
                 (l) => l.label,
             ),
             skills: R.sortBy(
-                Array.from(SKILL_LONG_FORMS).map((slug): SkillData => {
+                Array.from(SKILL_SLUGS).map((slug): SkillData => {
                     const best = getBestSkill(slug);
                     const label = game.i18n.localize(CONFIG.PF2E.skillList[slug]);
                     return best ?? { mod: 0, label, slug, rank: 0 };
@@ -383,9 +387,8 @@ class PartySheetPF2e extends ActorSheetPF2e<PartyPF2e> {
             (async () => {
                 const content = createHTMLElement("div", {
                     classes: ["item-summary"],
-                    innerHTML: await TextEditor.enrichHTML(document.description, { async: true, rollData }),
+                    innerHTML: await TextEditor.enrichHTML(document.description, { rollData }),
                 });
-                InlineRollLinks.listen(content, document);
                 $(activityElem).tooltipster({
                     contentAsHTML: true,
                     content,
@@ -439,21 +442,15 @@ class PartySheetPF2e extends ActorSheetPF2e<PartyPF2e> {
         data: DropCanvasItemDataPF2e & { fromInventory?: boolean },
     ): Promise<ItemPF2e[]> {
         const droppedRegion = htmlClosest(event.target, "[data-region]")?.dataset.region;
-        const targetActor = htmlClosest(event.target, "[data-actor-uuid]")?.dataset.actorUuid;
-        if (droppedRegion === "inventoryMembers" && targetActor) {
+        const targetActorUUID = htmlClosest(event.target, "[data-actor-uuid]")?.dataset.actorUuid;
+        if (droppedRegion === "inventoryMembers" && targetActorUUID) {
             const item = await ItemPF2e.fromDropData(data);
-            if (!item) return [];
-            const actorUuid = fu.parseUuid(targetActor).documentId;
-            if (actorUuid && item.actor && item.isOfType("physical")) {
-                await this.moveItemBetweenActors(
-                    event,
-                    item.actor.id,
-                    item.actor.token?.id ?? null,
-                    actorUuid,
-                    null,
-                    item.id,
-                );
+            const targetActor = await fromUuid(targetActorUUID);
+            if (item?.isOfType("physical") && item.actor && targetActor instanceof ActorPF2e) {
+                await this.moveItemBetweenActors(event, item, targetActor);
                 return [item];
+            } else if (!item) {
+                return [];
             }
         }
         return super._onDropItem(event, data);
@@ -539,6 +536,9 @@ interface PartySheetData extends ActorSheetDataPF2e<PartyPF2e> {
     };
     explorationSummary: {
         speed: number;
+        feetPerMinute: number;
+        milesPerHour: number;
+        milesPerDay: number;
         activities: number;
     };
     /** Unsupported items on the sheet, may occur due to disabled campaign data */

@@ -167,7 +167,7 @@ class ChatCards {
                                 `${consumable.name} - ${consumableString} (${currentQuant})`,
                             );
                             if (currentQuant === 0) {
-                                const buttonStr = `>${game.i18n.localize("PF2E.ConsumableUseLabel")}</button>`;
+                                const buttonStr = `>${game.i18n.localize("PF2E.Item.Consumable.Uses.Use")}</button>`;
                                 flavor = flavor?.replace(buttonStr, ` disabled${buttonStr}`);
                             }
                             await message.update({ flavor });
@@ -181,8 +181,7 @@ class ChatCards {
                     const element = htmlClosest(button, ".description");
                     if (element) {
                         element.innerHTML = await TextEditor.enrichHTML(description, {
-                            async: true,
-                            rollData: actor.getRollData(),
+                            rollData: item.getRollData(),
                         });
                         element.scrollIntoView({ behavior: "smooth", block: "center" });
                     }
@@ -285,7 +284,7 @@ class ChatCards {
                 if (isSpellConsumable(physicalItem.id) && physicalItem.isOfType("consumable")) {
                     craftSpellConsumable(physicalItem, quantity, actor);
                     ChatMessagePF2e.create({
-                        user: game.user.id,
+                        author: game.user.id,
                         content: game.i18n.format("PF2E.Actions.Craft.Information.PayAndReceive", {
                             actorName: actor.name,
                             cost: coinsToRemove.toString(),
@@ -307,7 +306,7 @@ class ChatCards {
                 }
 
                 ChatMessagePF2e.create({
-                    user: game.user.id,
+                    author: game.user.id,
                     content: game.i18n.format("PF2E.Actions.Craft.Information.LoseMaterials", {
                         actorName: actor.name,
                         cost: coinsToRemove.toString(),
@@ -324,7 +323,7 @@ class ChatCards {
                     ui.notifications.warn(game.i18n.localize("PF2E.Actions.Craft.Warning.InsufficientCoins"));
                 } else {
                     ChatMessagePF2e.create({
-                        user: game.user.id,
+                        author: game.user.id,
                         content: game.i18n.format("PF2E.Actions.Craft.Information.PayAndReceive", {
                             actorName: actor.name,
                             cost: coinsToRemove.toString(),

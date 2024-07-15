@@ -1,4 +1,5 @@
 import { ZeroToThree } from "@module/data.ts";
+import type { Die, NumericTerm } from "types/foundry/client-esm/dice/terms/module.d.ts";
 import type { CheckRoll } from "./check/roll.ts";
 import type { Predicate } from "./predication.ts";
 import type { StatisticDifficultyClass } from "./statistic/index.ts";
@@ -94,7 +95,7 @@ class DegreeOfSuccess {
             case "criticalSuccess":
                 return 3;
             default:
-                return Math.clamped(degreeOfSuccess + amount, 0, 3) as DegreeOfSuccessIndex;
+                return Math.clamp(degreeOfSuccess + amount, 0, 3) as DegreeOfSuccessIndex;
         }
     }
 

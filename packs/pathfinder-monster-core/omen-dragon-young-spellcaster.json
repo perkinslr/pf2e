@@ -32,23 +32,18 @@
                         "max": 5,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "P0y6LmPPsOUfA9P2"
                             },
                             {
-                                "expended": false,
                                 "id": "6SkUHzyT9u1wHGGX"
                             },
                             {
-                                "expended": false,
                                 "id": "uODo6wo8eADyijit"
                             },
                             {
-                                "expended": false,
                                 "id": "XNquesYFPhWPLulD"
                             },
                             {
-                                "expended": false,
                                 "id": "1q4ikdaqyMIVrRJT"
                             }
                         ]
@@ -57,15 +52,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "SUPYxrhgMH9JkXsj"
                             },
                             {
-                                "expended": false,
                                 "id": "WyrOsUMMX8Tjpzaa"
                             },
                             {
-                                "expended": false,
                                 "id": "JoBJfN9xnfAf1ECY"
                             }
                         ]
@@ -74,15 +66,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "TBCheNthVYJ517aD"
                             },
                             {
-                                "expended": false,
                                 "id": "MAjqmqR7d8oTqjDN"
                             },
                             {
-                                "expended": false,
                                 "id": "LQvNLRHKFPwUgsJ5"
                             }
                         ]
@@ -91,11 +80,9 @@
                         "max": 2,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "PHb6vzz9f1vDuE0q"
                             },
                             {
-                                "expended": false,
                                 "id": "zcjfJYPKfRwqIj7U"
                             }
                         ]
@@ -458,7 +445,7 @@
                     }
                 },
                 "description": {
-                    "value": "<p>You dull the target's mind, depending on its Will save.</p>\n<hr />\n<p><strong>Critical Success</strong> The target is unaffected.</p>\n<p><strong>Success</strong> The target is @UUID[Compendium.pf2e.conditionitems.Item.Stupefied]{Stupefied 1} until the start of your next turn.</p>\n<p><strong>Failure</strong> The target is @UUID[Compendium.pf2e.conditionitems.Item.Stupefied]{Stupefied 2} for 1 minute.</p>\n<p><strong>Critical Failure</strong> The target is @UUID[Compendium.pf2e.conditionitems.Item.Stupefied]{Stupefied 3} for 1 minute</p>"
+                    "value": "<p>You dull the target's mind, depending on its Will save.</p>\n<hr />\n<p><strong>Critical Success</strong> The target is unaffected.</p>\n<p><strong>Success</strong> The target is @UUID[Compendium.pf2e.conditionitems.Item.Stupefied]{Stupefied 1} until the start of your next turn.</p>\n<p><strong>Failure</strong> The target is @UUID[Compendium.pf2e.conditionitems.Item.Stupefied]{Stupefied 2} for 1 minute.</p>\n<p><strong>Critical Failure</strong> The target is @UUID[Compendium.pf2e.conditionitems.Item.Stupefied]{Stupefied 3} for 1 minute.</p>"
                 },
                 "duration": {
                     "sustained": false,

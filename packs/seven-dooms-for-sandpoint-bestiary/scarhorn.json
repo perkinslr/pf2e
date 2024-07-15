@@ -35,23 +35,18 @@
                         "max": 5,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "2OUoykAaf4Kopr1r"
                             },
                             {
-                                "expended": false,
                                 "id": "v4vWf4Kungq7gjPo"
                             },
                             {
-                                "expended": false,
                                 "id": "nkALPoFivDBquqWT"
                             },
                             {
-                                "expended": false,
                                 "id": "6OAXjdCFFUKUN9ED"
                             },
                             {
-                                "expended": false,
                                 "id": "NIlqG7sdffDuN1KS"
                             }
                         ]
@@ -60,15 +55,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "DR0HqHUTQuRyJJVk"
                             },
                             {
-                                "expended": false,
                                 "id": "UBpaBLzwRG9TY6C6"
                             },
                             {
-                                "expended": false,
                                 "id": "S0ffbtiJ3sCo8Jeq"
                             }
                         ]
@@ -77,15 +69,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "zGcMHCRFumLEj8r4"
                             },
                             {
-                                "expended": false,
                                 "id": "iscWyltkJ9DELtrc"
                             },
                             {
-                                "expended": false,
                                 "id": "jXH4j96gZWc2wbz9"
                             }
                         ]
@@ -94,15 +83,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "pJFZJurGpjTLmK6d"
                             },
                             {
-                                "expended": false,
                                 "id": "M6xIwgKsLWDeDfU3"
                             },
                             {
-                                "expended": false,
                                 "id": "xsmcESYTvlGyRzhz"
                             }
                         ]
@@ -111,15 +97,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "OOU5rMQPH18YsxJD"
                             },
                             {
-                                "expended": false,
                                 "id": "feYtuB44ROvXXzMI"
                             },
                             {
-                                "expended": false,
                                 "id": "DGulCssjkoMjyI4j"
                             }
                         ]
@@ -128,15 +111,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "y5LRGVbIwT6vKmN7"
                             },
                             {
-                                "expended": false,
                                 "id": "XLEjpHRea9TUJyOX"
                             },
                             {
-                                "expended": false,
                                 "id": "xHkKDOjqAcJqNuOS"
                             }
                         ]
@@ -145,19 +125,15 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "qNSPxYnuDUYXdE4A"
                             },
                             {
-                                "expended": false,
                                 "id": "60vOT3qwL4VhE9He"
                             },
                             {
-                                "expended": false,
                                 "id": "PXG0ybGYpgWl3A0V"
                             },
                             {
-                                "expended": false,
                                 "id": null
                             }
                         ]
@@ -309,7 +285,7 @@
                     }
                 },
                 "description": {
-                    "value": "<p>You magically spy on a creature of your choice. <em>Scrying </em>works like @UUID[Compendium.pf2e.spells-srd.Item.Clairvoyance], except that the image you receive is less precise, insufficient for <em>teleport </em>and similar spells. Instead of creating an eye in a set location within 500 feet, you instead create an eye that manifests just above the target. You can choose a target either by name or by touching one of its possessions or a piece of its body. If you haven't met the target in person, <em>scrying</em>'s DC is 2 lower, and if you are unaware of the target's identity (perhaps because you found an unknown creature's fang at a crime scene), the DC is instead 10 lower.</p>\n<p>The effect of <em>scrying </em>depends on the target's Will save.</p>\n<hr />\n<p><strong>Critical Success</strong> The spell fails and the target is temporarily immune for 1 week. The target also gains a glimpse of you and learns its rough distance and direction from you.</p>\n<p><strong>Success</strong> The spell fails and the target is temporarily immune for 1 day.</p>\n<p><strong>Failure</strong> The spell succeeds.</p>\n<p><strong>Critical Failure</strong> The spell succeeds, and the eye follows the target if it moves, traveling up to 60 feet per round.</p>"
+                    "value": "<p>You magically spy on a creature of your choice. <em>Scrying</em> works like @UUID[Compendium.pf2e.spells-srd.Item.Clairvoyance], except that the image you receive is less precise, insufficient for <em>teleport</em> and similar spells. Instead of creating an eye in a set location within 500 feet, you instead create an eye that manifests just above the target. You can choose a target either by name or by touching one of its possessions or a piece of its body. If you haven't met the target in person, <em>scrying</em>'s DC is 2 lower, and if you are unaware of the target's identity (perhaps because you found an unknown creature's fang at a crime scene), the DC is instead 10 lower.</p>\n<p>The effect of <em>scrying </em>depends on the target's Will save.</p>\n<hr />\n<p><strong>Critical Success</strong> The spell fails and the target is temporarily immune for 1 week. The target also gains a glimpse of you and learns its rough distance and direction from you.</p>\n<p><strong>Success</strong> The spell fails and the target is temporarily immune for 1 day.</p>\n<p><strong>Failure</strong> The spell succeeds.</p>\n<p><strong>Critical Failure</strong> The spell succeeds, and the eye follows the target if it moves, traveling up to 60 feet per round.</p>"
                 },
                 "duration": {
                     "sustained": true,

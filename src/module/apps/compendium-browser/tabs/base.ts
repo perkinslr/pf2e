@@ -43,6 +43,9 @@ export abstract class CompendiumBrowserTab {
      *  By default none, so resuts would only contain the id field. */
     storeFields: string[] = [];
 
+    /** Maximum size to create a roll table from as a sanity check, erring towards still too large. */
+    #MAX_TABLE_SIZE = 1000;
+
     constructor(browser: CompendiumBrowser) {
         this.browser = browser;
     }
@@ -70,7 +73,9 @@ export abstract class CompendiumBrowserTab {
                     return null;
                 }
                 return Array.from(wordSegmenter.segment(term))
-                    .map((t) => t.segment.toLocaleLowerCase(game.i18n.lang).replace(/['"]/g, ""))
+                    .map((t) =>
+                        SearchFilter.cleanQuery(t.segment.toLocaleLowerCase(game.i18n.lang)).replace(/['"]/g, ""),
+                    )
                     .filter((t) => t.length > 1);
             },
             storeFields: this.storeFields,
@@ -104,7 +109,7 @@ export abstract class CompendiumBrowserTab {
         }
 
         this.currentIndex = (() => {
-            const searchText = this.filterData.search.text;
+            const searchText = SearchFilter.cleanQuery(this.filterData.search.text);
             if (searchText) {
                 const searchResult = this.searchEngine.search(searchText);
                 return this.sortResult(searchResult.filter(this.filterIndexData.bind(this)));
@@ -296,27 +301,40 @@ export abstract class CompendiumBrowserTab {
         initial?: number;
         weight?: number;
     }): Partial<TableResultSource>[] {
-        return this.currentIndex.flatMap((e, i) => {
-            const data = fromUuidSync(e.uuid);
-            if (!data?.pack || !data._id || !("name" in data)) return [];
-            const rangeMinMax = initial + i + 1;
-            return {
-                text: data.name,
-                type: CONST.TABLE_RESULT_TYPES.COMPENDIUM,
-                collection: data.pack,
-                resultId: data._id,
-                img: e.img,
-                weight,
-                range: [rangeMinMax, rangeMinMax],
-                drawn: false,
-            };
-        });
+        return this.currentIndex
+            .map((e, i): Partial<TableResultSource> | null => {
+                const data = fromUuidSync(e.uuid);
+                if (!data?.pack || !data._id || !("name" in data)) return null;
+                const rangeMinMax = initial + i + 1;
+                return {
+                    text: data.name,
+                    type: CONST.TABLE_RESULT_TYPES.COMPENDIUM,
+                    documentCollection: data.pack,
+                    documentId: data._id,
+                    img: e.img,
+                    weight,
+                    range: [rangeMinMax, rangeMinMax],
+                    drawn: false,
+                };
+            })
+            .filter((r): r is Partial<TableResultSource> => !!r);
     }
 
     async createRollTable(): Promise<void> {
         if (!this.isInitialized) {
             throw ErrorPF2e(`Compendium Browser Tab "${this.tabName}" is not initialized!`);
         }
+
+        if (this.currentIndex.length > this.#MAX_TABLE_SIZE) {
+            ui.notifications.warn(
+                game.i18n.format("PF2E.CompendiumBrowser.RollTable.TooManyResults", {
+                    size: this.currentIndex.length,
+                    maxSize: this.#MAX_TABLE_SIZE,
+                }),
+            );
+            return;
+        }
+
         const content = await renderTemplate("systems/pf2e/templates/compendium-browser/roll-table-dialog.hbs", {
             count: this.currentIndex.length,
         });
@@ -344,6 +362,17 @@ export abstract class CompendiumBrowserTab {
         if (!this.isInitialized) {
             throw ErrorPF2e(`Compendium Browser Tab "${this.tabName}" is not initialized!`);
         }
+
+        if (this.currentIndex.length > this.#MAX_TABLE_SIZE) {
+            ui.notifications.warn(
+                game.i18n.format("PF2E.CompendiumBrowser.RollTable.TooManyResults", {
+                    size: this.currentIndex.length,
+                    maxSize: this.#MAX_TABLE_SIZE,
+                }),
+            );
+            return;
+        }
+
         const content = await renderTemplate("systems/pf2e/templates/compendium-browser/roll-table-dialog.hbs", {
             count: this.currentIndex.length,
             rollTables: game.tables.contents,

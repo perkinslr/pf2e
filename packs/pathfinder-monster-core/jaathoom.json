@@ -52,7 +52,7 @@
                 }
             },
             "img": "icons/magic/lightning/bolt-strike-explosion-purple.webp",
-            "name": "Interplanar Teleport(to Astral Plane, Elemental Planes, or the Universe only)",
+            "name": "Interplanar Teleport (to Astral Plane, Elemental Planes, or the Universe only)",
             "sort": 200000,
             "system": {
                 "area": null,
@@ -1337,7 +1337,7 @@
         "details": {
             "blurb": "",
             "languages": {
-                "details": "(Can’t Speak Any Language); Cloud of Visions",
+                "details": "(Can't Speak Any Language); Cloud of Visions",
                 "value": [
                     "common",
                     "sussuran"

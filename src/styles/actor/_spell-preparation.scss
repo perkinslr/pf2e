@@ -67,6 +67,10 @@
                 justify-self: center;
                 display: flex;
                 flex-wrap: nowrap;
+                &.defense,
+                &.range {
+                    text-align: center;
+                }
             }
 
             &:nth-child(odd) {

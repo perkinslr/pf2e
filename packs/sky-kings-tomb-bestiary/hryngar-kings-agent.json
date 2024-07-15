@@ -881,53 +881,10 @@
             "type": "melee"
         },
         {
-            "_id": "5LCG63t3gJollYoy",
-            "img": "systems/pf2e/icons/default-icons/melee.svg",
-            "name": "Hand Crossbow",
-            "sort": 1400000,
-            "system": {
-                "attack": {
-                    "value": ""
-                },
-                "attackEffects": {
-                    "value": []
-                },
-                "bonus": {
-                    "value": 13
-                },
-                "damageRolls": {
-                    "QuhwqVXm8vRZ6Qf0": {
-                        "damage": "1d6+2",
-                        "damageType": "piercing"
-                    }
-                },
-                "description": {
-                    "value": ""
-                },
-                "publication": {
-                    "license": "OGL",
-                    "remaster": false,
-                    "title": ""
-                },
-                "rules": [],
-                "slug": null,
-                "traits": {
-                    "value": [
-                        "range-60",
-                        "reload-1"
-                    ]
-                },
-                "weaponType": {
-                    "value": "ranged"
-                }
-            },
-            "type": "melee"
-        },
-        {
             "_id": "KBnjXtkhfR9fg9EG",
             "img": "systems/pf2e/icons/default-icons/melee.svg",
             "name": "Dagger",
-            "sort": 1500000,
+            "sort": 1400000,
             "system": {
                 "attack": {
                     "value": ""
@@ -971,7 +928,7 @@
             "_id": "4RK0l69OChM1oNOu",
             "img": "systems/pf2e/icons/default-icons/melee.svg",
             "name": "Bola",
-            "sort": 1600000,
+            "sort": 1500000,
             "system": {
                 "attack": {
                     "value": ""
@@ -1003,6 +960,49 @@
                         "nonlethal",
                         "ranged-trip",
                         "thrown-20"
+                    ]
+                },
+                "weaponType": {
+                    "value": "ranged"
+                }
+            },
+            "type": "melee"
+        },
+        {
+            "_id": "5LCG63t3gJollYoy",
+            "img": "systems/pf2e/icons/default-icons/melee.svg",
+            "name": "Hand Crossbow",
+            "sort": 1600000,
+            "system": {
+                "attack": {
+                    "value": ""
+                },
+                "attackEffects": {
+                    "value": []
+                },
+                "bonus": {
+                    "value": 13
+                },
+                "damageRolls": {
+                    "QuhwqVXm8vRZ6Qf0": {
+                        "damage": "1d6+2",
+                        "damageType": "piercing"
+                    }
+                },
+                "description": {
+                    "value": ""
+                },
+                "publication": {
+                    "license": "OGL",
+                    "remaster": false,
+                    "title": ""
+                },
+                "rules": [],
+                "slug": null,
+                "traits": {
+                    "value": [
+                        "range-60",
+                        "reload-1"
                     ]
                 },
                 "weaponType": {
@@ -1396,7 +1396,7 @@
                 "value": 5
             },
             "privateNotes": "",
-            "publicNotes": "<p>Involved in both domestic security and international espionage, the agents of King Orgukagan’s secret police are skilled at capturing enemies for interrogation, infiltrating rival organizations, and fighting without weapons. When the king takes special interest in a project, event, or individual, he sends one of his specially trained agents to handle the situation.</p>\n<hr />\n<p>Hryngars descend from dwarves who did not undertake the Quest for Sky and remained denizens of the Darklands. Most now worship Droskar, god of toil.</p>\n<h2>Upworlder Prejudice</h2>\n<p>Many upworlders' only experience with denizens from the Darklands come from Darklands raids. This has unfortunately caused many on the surface to believe that all Darklands peoples are murderous, which, of course, isn't the case. The Darklands are a harsh realm, and the people who live there have adapted to survive in an unforgiving environment that rewards the strong and punishes the meek. Yet despite this, there are still rich cultures and compassionate beings below the surface of Golarion.</p>\n<h2>Highhelm Propaganda</h2>\n<p>Upworlders often believe that hryngars make shoddy weapons and armor, but this is propaganda spread by dwarves on the surface. Any proud hryngar knows that if you work hard enough on a project, it will come out just as well as crafters who rely on clever secrets and modern techniques. Therefore hryngar-made products often have fewer aesthetic elements in their design. Their creations tend to focus more on pure function.</p>",
+            "publicNotes": "<p>Involved in both domestic security and international espionage, the agents of King Orgukagan's secret police are skilled at capturing enemies for interrogation, infiltrating rival organizations, and fighting without weapons. When the king takes special interest in a project, event, or individual, he sends one of his specially trained agents to handle the situation.</p>\n<hr />\n<p>Hryngars descend from dwarves who did not undertake the Quest for Sky and remained denizens of the Darklands. Most now worship Droskar, god of toil.</p>\n<h2>Upworlder Prejudice</h2>\n<p>Many upworlders' only experience with denizens from the Darklands come from Darklands raids. This has unfortunately caused many on the surface to believe that all Darklands peoples are murderous, which, of course, isn't the case. The Darklands are a harsh realm, and the people who live there have adapted to survive in an unforgiving environment that rewards the strong and punishes the meek. Yet despite this, there are still rich cultures and compassionate beings below the surface of Golarion.</p>\n<h2>Highhelm Propaganda</h2>\n<p>Upworlders often believe that hryngars make shoddy weapons and armor, but this is propaganda spread by dwarves on the surface. Any proud hryngar knows that if you work hard enough on a project, it will come out just as well as crafters who rely on clever secrets and modern techniques. Therefore hryngar-made products often have fewer aesthetic elements in their design. Their creations tend to focus more on pure function.</p>",
             "publication": {
                 "license": "OGL",
                 "remaster": false,

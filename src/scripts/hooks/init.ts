@@ -1,4 +1,6 @@
 import { MystifiedTraits } from "@item/base/data/values.ts";
+import { KitSystemData } from "@item/kit/data.ts";
+import { MeleeSystemData } from "@item/melee/data.ts";
 import { HotbarPF2e } from "@module/apps/hotbar.ts";
 import {
     ActorDirectoryPF2e,
@@ -7,15 +9,7 @@ import {
     EncounterTrackerPF2e,
     ItemDirectoryPF2e,
 } from "@module/apps/sidebar/index.ts";
-import {
-    AmbientLightPF2e,
-    EffectsCanvasGroupPF2e,
-    LightingLayerPF2e,
-    MeasuredTemplatePF2e,
-    TemplateLayerPF2e,
-    TokenLayerPF2e,
-    TokenPF2e,
-} from "@module/canvas/index.ts";
+import { AmbientLightPF2e, LightingLayerPF2e, MeasuredTemplatePF2e, TemplateLayerPF2e } from "@module/canvas/index.ts";
 import { setPerceptionModes } from "@module/canvas/perception/modes.ts";
 import { PF2ECONFIG } from "@scripts/config/index.ts";
 import { registerHandlebarsHelpers } from "@scripts/handlebars.ts";
@@ -38,18 +32,13 @@ export const Init = {
             CONFIG.AmbientLight.layerClass = LightingLayerPF2e;
             CONFIG.AmbientLight.objectClass = AmbientLightPF2e;
 
+            CONFIG.Item.dataModels.kit = KitSystemData;
+            CONFIG.Item.dataModels.melee = MeleeSystemData;
+
             CONFIG.MeasuredTemplate.objectClass = MeasuredTemplatePF2e;
             CONFIG.MeasuredTemplate.layerClass = TemplateLayerPF2e;
             CONFIG.MeasuredTemplate.defaults.angle = 90;
             CONFIG.MeasuredTemplate.defaults.width = 1;
-
-            CONFIG.Token.objectClass = TokenPF2e;
-            CONFIG.Token.layerClass = TokenLayerPF2e;
-
-            CONFIG.Canvas.groups.effects.groupClass = EffectsCanvasGroupPF2e;
-            CONFIG.Canvas.layers.lighting.layerClass = LightingLayerPF2e;
-            CONFIG.Canvas.layers.templates.layerClass = TemplateLayerPF2e;
-            CONFIG.Canvas.layers.tokens.layerClass = TokenLayerPF2e;
 
             setPerceptionModes();
 

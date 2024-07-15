@@ -478,7 +478,7 @@
                 "rules": [],
                 "slug": "sending",
                 "target": {
-                    "value": "1 creature with whom you are familiar"
+                    "value": "1 creature you know well"
                 },
                 "time": {
                     "value": "3"
@@ -2655,7 +2655,7 @@
         {
             "_id": "dxLrvmfMtHkddYo4",
             "img": "systems/pf2e/icons/actions/Passive.webp",
-            "name": "Shepherd’s Touch",
+            "name": "Shepherd's Touch",
             "sort": 3800000,
             "system": {
                 "actionType": {

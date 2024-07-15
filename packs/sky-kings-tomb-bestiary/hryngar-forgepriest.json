@@ -72,7 +72,6 @@
                                 "id": "mREvRZRthMr2xEIT"
                             },
                             {
-                                "expended": false,
                                 "id": "MKvXwn0mHP3AV8Cx"
                             },
                             {
@@ -90,7 +89,6 @@
                                 "id": "TFXheXzoOGPK0IN3"
                             },
                             {
-                                "expended": false,
                                 "id": "ElhM0x6zvF6dlv3b"
                             }
                         ]
@@ -1101,7 +1099,7 @@
                 "damage": {},
                 "defense": null,
                 "description": {
-                    "value": "<p>The simplest magic does your bidding. You can perform simple magical effects for as long as you Sustain the Spell. Each time you Sustain the Spell, you can choose one of four options.</p>\n<ul>\n<li><strong>Cook</strong> Cool, warm, or flavor 1 pound of nonliving material.</li>\n<li><strong>Lift</strong> <strong>Slowly</strong> lift an unattended object of light Bulk or less 1 foot off the ground.</li>\n<li><strong>Make</strong> Create a temporary object of negligible Bulk, made of congealed magical substance. The object looks crude and artificial and is extremely fragile-it can't be used as a tool, weapon, or spell component.</li>\n<li><strong>Tidy</strong> Color, clean, or soil an object of light Bulk or less. You can affect an object of 1 Bulk with 10 rounds of concentration, and a larger object a 1 minute per Bulk.</li>\n</ul>\n<p>Prestidigitation can't deal damage or cause adverse conditions. Any actual change to an object (beyond what is noted above) persists only as long as you Sustain the Spell.</p>"
+                    "value": "<p>The simplest magic does your bidding. You can perform simple magical effects for as long as you Sustain the Spell. Each time you Sustain the Spell, you can choose one of four options.</p>\n<ul>\n<li><strong>Cook</strong> Cool, warm, or flavor 1 pound of nonliving material.</li>\n<li><strong>Lift</strong> Slowly lift an unattended object of light Bulk or less 1 foot off the ground.</li>\n<li><strong>Make</strong> Create a temporary object of negligible Bulk, made of congealed magical substance. The object looks crude and artificial and is extremely fragile-it can't be used as a tool, weapon, or spell component.</li>\n<li><strong>Tidy</strong> Color, clean, or soil an object of light Bulk or less. You can affect an object of 1 Bulk with 10 rounds of concentration, and a larger object a 1 minute per Bulk.</li>\n</ul>\n<p>Prestidigitation can't deal damage or cause adverse conditions. Any actual change to an object (beyond what is noted above) persists only as long as you Sustain the Spell.</p>"
                 },
                 "duration": {
                     "sustained": true,
@@ -1929,7 +1927,7 @@
                 "value": 6
             },
             "privateNotes": "",
-            "publicNotes": "<p>Abandoned by their cousins, the surface dwarves, hryngars were saved by Droskar, who taught them to work hard and give no quarter. Now, that hardness is the sword and shield by which the hryngar rule their kingdoms. The forgepriests proselytize Droskar’s teachings and punish heretics for any defiance.</p>\n<hr />\n<p>Hryngars descend from dwarves who did not undertake the Quest for Sky and remained denizens of the Darklands. Most now worship Droskar, god of toil.</p>\n<h2>Upworlder Prejudice</h2>\n<p>Many upworlders' only experience with denizens from the Darklands come from Darklands raids. This has unfortunately caused many on the surface to believe that all Darklands peoples are murderous, which, of course, isn't the case. The Darklands are a harsh realm, and the people who live there have adapted to survive in an unforgiving environment that rewards the strong and punishes the meek. Yet despite this, there are still rich cultures and compassionate beings below the surface of Golarion.</p>\n<h2>Highhelm Propaganda</h2>\n<p>Upworlders often believe that hryngars make shoddy weapons and armor, but this is propaganda spread by dwarves on the surface. Any proud hryngar knows that if you work hard enough on a project, it will come out just as well as crafters who rely on clever secrets and modern techniques. Therefore hryngar-made products often have fewer aesthetic elements in their design. Their creations tend to focus more on pure function.</p>",
+            "publicNotes": "<p>Abandoned by their cousins, the surface dwarves, hryngars were saved by Droskar, who taught them to work hard and give no quarter. Now, that hardness is the sword and shield by which the hryngar rule their kingdoms. The forgepriests proselytize Droskar's teachings and punish heretics for any defiance.</p>\n<hr />\n<p>Hryngars descend from dwarves who did not undertake the Quest for Sky and remained denizens of the Darklands. Most now worship Droskar, god of toil.</p>\n<h2>Upworlder Prejudice</h2>\n<p>Many upworlders' only experience with denizens from the Darklands come from Darklands raids. This has unfortunately caused many on the surface to believe that all Darklands peoples are murderous, which, of course, isn't the case. The Darklands are a harsh realm, and the people who live there have adapted to survive in an unforgiving environment that rewards the strong and punishes the meek. Yet despite this, there are still rich cultures and compassionate beings below the surface of Golarion.</p>\n<h2>Highhelm Propaganda</h2>\n<p>Upworlders often believe that hryngars make shoddy weapons and armor, but this is propaganda spread by dwarves on the surface. Any proud hryngar knows that if you work hard enough on a project, it will come out just as well as crafters who rely on clever secrets and modern techniques. Therefore hryngar-made products often have fewer aesthetic elements in their design. Their creations tend to focus more on pure function.</p>",
             "publication": {
                 "license": "OGL",
                 "remaster": false,

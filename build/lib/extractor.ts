@@ -576,6 +576,13 @@ class PackExtractor {
             if (source.system.showSlotlessLevels?.value === true) {
                 delete (source.system as { showSlotlessLevels?: { value: boolean } }).showSlotlessLevels;
             }
+            for (const slotGroup of Object.values(source.system.slots)) {
+                for (const spellPrep of slotGroup.prepared ?? []) {
+                    if (!spellPrep.expended) {
+                        delete (spellPrep as { expended?: unknown }).expended;
+                    }
+                }
+            }
 
             source.system.slots = fu.diffObject(templateJSON.Item.spellcastingEntry.slots, source.system.slots);
         }
@@ -625,8 +632,11 @@ class PackExtractor {
                     return this.#sortAbilities(docSource.name, itemsByType.action);
                 case "lore":
                     return R.sortBy(itemsByType.lore ?? [], (l) => l.name);
-                case "melee":
-                    return R.sortBy(itemsByType.melee ?? [], (m) => m.system.weaponType.value);
+                case "melee": {
+                    return R.sortBy(itemsByType.melee ?? [], (m) =>
+                        m.system.traits.value.some((t) => t.startsWith("range-")),
+                    );
+                }
                 case "spell":
                     return R.sortBy(itemsByType.spell ?? [], [(s) => s.system.level.value, "desc"], (s) => s.name);
                 case "spellcastingEntry":

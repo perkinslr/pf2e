@@ -286,7 +286,7 @@
                     "sourceId": "Compendium.pf2e.spells-srd.Item.Tc5NLaMu71vrGTJQ"
                 }
             },
-            "img": "systems/pf2e/icons/spells/natures-enmity.webp",
+            "img": "icons/magic/nature/root-vine-entangle-foot-green.webp",
             "name": "Nature's Enmity",
             "sort": 600000,
             "system": {
@@ -2097,9 +2097,9 @@
                     "value": "OqVIaOEX3mbFTW9O"
                 },
                 "publication": {
-                    "license": "OGL",
-                    "remaster": false,
-                    "title": "Pathfinder Core Rulebook"
+                    "license": "ORC",
+                    "remaster": true,
+                    "title": "Pathfinder Player Core"
                 },
                 "range": {
                     "value": "planetary"
@@ -2108,7 +2108,7 @@
                 "rules": [],
                 "slug": "sending",
                 "target": {
-                    "value": "1 creature with whom you are familiar"
+                    "value": "1 creature you know well"
                 },
                 "time": {
                     "value": "3"

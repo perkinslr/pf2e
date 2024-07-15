@@ -296,7 +296,7 @@
                 "rules": [],
                 "slug": "sending",
                 "target": {
-                    "value": "1 creature with whom you are familiar"
+                    "value": "1 creature you know well"
                 },
                 "time": {
                     "value": "3"
@@ -1268,7 +1268,6 @@
                             "animation": {
                                 "type": "flame"
                             },
-                            "bright": 0,
                             "color": "#CCE3EB",
                             "dim": 30
                         }

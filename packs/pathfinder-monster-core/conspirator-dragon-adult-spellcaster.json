@@ -32,23 +32,18 @@
                         "max": 5,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "46rrGJCJ75Jg4IEq"
                             },
                             {
-                                "expended": false,
                                 "id": "QccckNLuVXAHYttJ"
                             },
                             {
-                                "expended": false,
                                 "id": "VIz71fJekfYBFktn"
                             },
                             {
-                                "expended": false,
                                 "id": "ZMssswqHQye6QTB2"
                             },
                             {
-                                "expended": false,
                                 "id": "VEtDtPA7Nc3QogaK"
                             }
                         ]
@@ -57,15 +52,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "K7HfjoXxr0nBQr5F"
                             },
                             {
-                                "expended": false,
                                 "id": "6CtN2EJ0tp7n5VYB"
                             },
                             {
-                                "expended": false,
                                 "id": "Rjw7gqiuJ7W97Xcm"
                             }
                         ]
@@ -74,15 +66,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "FaRNifscrI4KmbIR"
                             },
                             {
-                                "expended": false,
                                 "id": "EMkA1m49AVJ174eY"
                             },
                             {
-                                "expended": false,
                                 "id": "oXuFkK27VyXF3sqR"
                             }
                         ]
@@ -91,15 +80,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "VNtNdClezfZMhqjs"
                             },
                             {
-                                "expended": false,
                                 "id": "ixLKrjfi74gnO139"
                             },
                             {
-                                "expended": false,
                                 "id": "w35JDIWT7bySRfTL"
                             }
                         ]
@@ -108,15 +94,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "0EaDqlEJJBKW031w"
                             },
                             {
-                                "expended": false,
                                 "id": "9ranmGW8NF1MXodq"
                             },
                             {
-                                "expended": false,
                                 "id": "v68uiKT1XybL37nL"
                             }
                         ]
@@ -125,15 +108,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "fy7BTXYZ87cxLzMn"
                             },
                             {
-                                "expended": false,
                                 "id": "QhXy4aiKP8nyi9IR"
                             },
                             {
-                                "expended": false,
                                 "id": "0vQs5RxOskUnzbXG"
                             }
                         ]
@@ -1971,7 +1951,7 @@
                 },
                 "defense": null,
                 "description": {
-                    "value": "<p>You hurl a loose, unattended object that is within range and that has 1 Bulk or less at the target. Make a spell attack roll against the target. If you hit, you deal 2d6 bludgeoning, piercing, or slashing damage--as appropriate for the object you hurled. No specific traits or magic properties of the hurled item affect the attack or the damage.</p>\n<hr />\n<p><strong>Critical Success</strong> You deal double damage.</p>\n<p><strong>Success</strong> You deal full damage.</p>\n<hr />\n<p><strong>Heightened (+1)</strong> The damage increases by 1d6.</p>"
+                    "value": "<p>You hurl a loose, unattended object that is within range and that has 1 Bulk or less at the target. Make a spell attack roll against the target. If you hit, you deal 2d6 bludgeoning, piercing, or slashing damage—as appropriate for the object you hurled. No specific traits or magic properties of the hurled item affect the attack or the damage.</p>\n<hr />\n<p><strong>Critical Success</strong> You deal double damage.</p>\n<p><strong>Success</strong> You deal full damage.</p>\n<hr />\n<p><strong>Heightened (+1)</strong> The damage increases by 1d6.</p>"
                 },
                 "duration": {
                     "sustained": false,

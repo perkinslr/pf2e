@@ -35,23 +35,18 @@
                         "max": 5,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "lFUe12ATKUp0a3LS"
                             },
                             {
-                                "expended": false,
                                 "id": "h9nKmdZse8se97QJ"
                             },
                             {
-                                "expended": false,
                                 "id": "06S6wXsaiFiNNjIH"
                             },
                             {
-                                "expended": false,
                                 "id": "y840SqviTNxwcTT9"
                             },
                             {
-                                "expended": false,
                                 "id": "a2a38SbXWgXI4LZh"
                             }
                         ]
@@ -60,15 +55,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "HFN8GhkIROa5Jldj"
                             },
                             {
-                                "expended": false,
                                 "id": "ROiTay2mjWfP6B5B"
                             },
                             {
-                                "expended": false,
                                 "id": "5knPCft7kR7Gma0C"
                             }
                         ]
@@ -77,15 +69,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "YjGjYZmxvTXDbHjO"
                             },
                             {
-                                "expended": false,
                                 "id": "mFoiawt4XEP7PBhq"
                             },
                             {
-                                "expended": false,
                                 "id": "dE6Xqj6IXKagZtyY"
                             }
                         ]
@@ -94,15 +83,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "8YeMUD5G9lGwap2J"
                             },
                             {
-                                "expended": false,
                                 "id": "1zKbYzjNIxvWnY1N"
                             },
                             {
-                                "expended": false,
                                 "id": "qJCLXCrbFrLxyKMd"
                             }
                         ]
@@ -111,15 +97,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "s7djyQJAchzoQm7W"
                             },
                             {
-                                "expended": false,
                                 "id": "u0VlG0udPOJnHjy9"
                             },
                             {
-                                "expended": false,
                                 "id": "aVR8mePc3LHPIxP3"
                             }
                         ]
@@ -128,15 +111,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "s7djyQJAchzoQm7W"
                             },
                             {
-                                "expended": false,
                                 "id": "fQo5URzwk4iRYNl8"
                             },
                             {
-                                "expended": false,
                                 "id": "1YCAsnnEUBjRLKXR"
                             }
                         ]
@@ -145,15 +125,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "dNKrfEYZ7pE0OPED"
                             },
                             {
-                                "expended": false,
                                 "id": "jt3rsd5aPv7V9nfE"
                             },
                             {
-                                "expended": false,
                                 "id": "CnRsfIxw0IYjbJmT"
                             }
                         ]
@@ -235,7 +212,7 @@
                     }
                 },
                 "description": {
-                    "value": "<p>You transform the target creature into a harmless animal appropriate to the area, with effects based on its Fortitude save.</p>\n<hr />\n<p><strong>Critical Success</strong> The target is unaffected.</p>\n<p><strong>Success</strong> The target's body gains minor features of the harmless animal. Its insides churn as they partially transform, causing it to be @UUID[Compendium.pf2e.conditionitems.Item.Sickened]{Sickened 1}. When it recovers from the Sickened condition, its features revert to normal.</p>\n<p><strong>Failure</strong> The target transforms for 1 minute but keeps its mind. If it spends all its actions on its turn concentrating on its original form, it can attempt a Will save to end the effect immediately.</p>\n<p><strong>Critical Failure</strong> The target is transformed into the chosen harmless animal, body and mind, for an unlimited duration.</p>"
+                    "value": "<p>You transform the target creature into a harmless animal appropriate to the area, with effects based on its Fortitude save.</p>\n<hr />\n<p><strong>Critical Success</strong> The target is unaffected.</p>\n<p><strong>Success</strong> The target's body gains minor features of the harmless animal. Its insides churn as they partially transform, causing it to be @UUID[Compendium.pf2e.conditionitems.Item.Sickened]{Sickened 1}. When it recovers from the sickened condition, its features revert to normal.</p>\n<p><strong>Failure</strong> The target transforms for 1 minute but keeps its mind. If it spends all its actions on its turn concentrating on its original form, it can attempt a @Check[type:will] save to end the effect immediately.</p>\n<p><strong>Critical Failure</strong> The target is transformed into the chosen harmless animal, body and mind, for an unlimited duration.</p>"
                 },
                 "duration": {
                     "sustained": false,
@@ -268,6 +245,7 @@
                     "rarity": "common",
                     "traditions": [
                         "arcane",
+                        "occult",
                         "primal"
                     ],
                     "value": [
@@ -392,7 +370,7 @@
                 "rules": [],
                 "slug": "sending",
                 "target": {
-                    "value": "1 creature with whom you are familiar"
+                    "value": "1 creature you know well"
                 },
                 "time": {
                     "value": "3"
@@ -2088,7 +2066,7 @@
                 "damage": {},
                 "defense": null,
                 "description": {
-                    "value": "<p>You summon a @UUID[Compendium.pf2e.pathfinder-bestiary.Actor.Phantasmal Minion]. The minion is roughly the shape of a humanoid. You can choose to have it be @UUID[Compendium.pf2e.conditionitems.Item.Invisible] or have an ephemeral appearance, but it's obviously a magical effect, not a real creature.</p>\n<div class=\"notranslate\" style=\"all:initial\"> </div>"
+                    "value": "<p>You summon a @UUID[Compendium.pf2e.pathfinder-bestiary.Actor.Phantasmal Minion]. The minion is roughly the shape of a humanoid. You can choose to have it be @UUID[Compendium.pf2e.conditionitems.Item.Invisible] or have an ephemeral appearance, but it's obviously a magical effect, not a real creature.</p>"
                 },
                 "duration": {
                     "sustained": true,
@@ -2477,7 +2455,7 @@
                 },
                 "defense": null,
                 "description": {
-                    "value": "<p>You hurl a loose, unattended object that is within range and that has 1 Bulk or less at the target. Make a spell attack roll against the target. If you hit, you deal 2d6 bludgeoning, piercing, or slashing damage--as appropriate for the object you hurled. No specific traits or magic properties of the hurled item affect the attack or the damage.</p>\n<hr />\n<p><strong>Critical Success</strong> You deal double damage.</p>\n<p><strong>Success</strong> You deal full damage.</p>\n<hr />\n<p><strong>Heightened (+1)</strong> The damage increases by 1d6.</p>"
+                    "value": "<p>You hurl a loose, unattended object that is within range and that has 1 Bulk or less at the target. Make a spell attack roll against the target. If you hit, you deal 2d6 bludgeoning, piercing, or slashing damage—as appropriate for the object you hurled. No specific traits or magic properties of the hurled item affect the attack or the damage.</p>\n<hr />\n<p><strong>Critical Success</strong> You deal double damage.</p>\n<p><strong>Success</strong> You deal full damage.</p>\n<hr />\n<p><strong>Heightened (+1)</strong> The damage increases by 1d6.</p>"
                 },
                 "duration": {
                     "sustained": false,
@@ -2922,7 +2900,7 @@
                 },
                 "variants": {
                     "0": {
-                        "label": "+24 with liar’s lexicon",
+                        "label": "+24 with liar's lexicon",
                         "options": "action:lie"
                     }
                 }
@@ -3008,7 +2986,7 @@
             "type": "lore"
         }
     ],
-    "name": "Kaleb Valdemar’s Body",
+    "name": "Kaleb Valdemar's Body",
     "system": {
         "abilities": {
             "cha": {

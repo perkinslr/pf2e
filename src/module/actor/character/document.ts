@@ -1,6 +1,6 @@
 import { CreaturePF2e, type FamiliarPF2e } from "@actor";
-import { Abilities, CreatureSpeeds, LabeledSpeed, SkillAbbreviation } from "@actor/creature/data.ts";
-import { CreatureUpdateContext } from "@actor/creature/types.ts";
+import { Abilities, CreatureSpeeds, LabeledSpeed } from "@actor/creature/data.ts";
+import { CreatureUpdateOperation } from "@actor/creature/types.ts";
 import { ALLIANCES, SAVING_THROW_ATTRIBUTES } from "@actor/creature/values.ts";
 import { StrikeData } from "@actor/data/base.ts";
 import { ActorSizePF2e } from "@actor/data/size.ts";
@@ -24,14 +24,8 @@ import {
 } from "@actor/modifiers.ts";
 import { CheckContext } from "@actor/roll-context/check.ts";
 import { DamageContext } from "@actor/roll-context/damage.ts";
-import { AttributeString, MovementType, SkillLongForm } from "@actor/types.ts";
-import {
-    ATTRIBUTE_ABBREVIATIONS,
-    SAVE_TYPES,
-    SKILL_ABBREVIATIONS,
-    SKILL_DICTIONARY,
-    SKILL_EXPANDED,
-} from "@actor/values.ts";
+import { AttributeString, MovementType, SkillSlug } from "@actor/types.ts";
+import { ATTRIBUTE_ABBREVIATIONS, SAVE_TYPES, SKILL_EXPANDED, SKILL_SLUGS } from "@actor/values.ts";
 import type {
     AncestryPF2e,
     BackgroundPF2e,
@@ -40,6 +34,7 @@ import type {
     DeityPF2e,
     FeatPF2e,
     HeritagePF2e,
+    LorePF2e,
     PhysicalItemPF2e,
 } from "@item";
 import { ItemPF2e, WeaponPF2e } from "@item";
@@ -79,6 +74,7 @@ import {
     CharacterAbilities,
     CharacterAttributes,
     CharacterFlags,
+    CharacterSkillData,
     CharacterSource,
     CharacterStrike,
     CharacterSystemData,
@@ -147,15 +143,6 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
         return this.system.details.keyability.value || "str";
     }
 
-    /** @deprecated */
-    get keyAbility(): AttributeString {
-        fu.logCompatibilityWarning(
-            "`CharacterPF2e#keyAbility` is deprecated. Use `CharacterPF2e#keyAttribute` instead.",
-            { since: "5.2.0", until: "6.0.0" },
-        );
-        return this.keyAttribute;
-    }
-
     /** This PC's ability scores */
     override get abilities(): CharacterAbilities {
         return fu.deepClone(this.system.abilities);
@@ -163,13 +150,13 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
 
     get handsFree(): ZeroToTwo {
         const heldItems = this.inventory.filter((i) => i.isHeld && i.type !== "shield" && !i.traits.has("free-hand"));
-        return Math.clamped(2 - R.sumBy(heldItems, (i) => i.handsHeld), 0, 2) as ZeroToTwo;
+        return Math.clamp(2 - R.sumBy(heldItems, (i) => i.handsHeld), 0, 2) as ZeroToTwo;
     }
 
     /** The number of hands this PC "really" has free, ignoring allowances for shields and the Free-Hand trait */
     get handsReallyFree(): ZeroToTwo {
         const heldItems = this.inventory.filter((i) => i.isHeld);
-        return Math.clamped(2 - R.sumBy(heldItems, (i) => i.handsHeld), 0, 2) as ZeroToTwo;
+        return Math.clamp(2 - R.sumBy(heldItems, (i) => i.handsHeld), 0, 2) as ZeroToTwo;
     }
 
     override get hitPoints(): CharacterHitPointsSummary {
@@ -330,7 +317,7 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
             (result, level) => {
                 const allowed = (() => {
                     if (this.level === 0 && level === 1) return 4;
-                    if (isGradual) return 4 - Math.clamped(level - this.level, 0, 4);
+                    if (isGradual) return 4 - Math.clamp(level - this.level, 0, 4);
                     return this.level >= level ? 4 : 0;
                 })();
 
@@ -349,10 +336,9 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
 
         this.system.perception.rank = 0;
 
-        type PartialSkills = Record<SkillAbbreviation, { rank: number; attribute?: AttributeString; armor?: boolean }>;
         type SystemDataPartial = DeepPartial<
-            Pick<CharacterSystemData, "build" | "crafting" | "perception" | "proficiencies" | "saves">
-        > & { abilities: Abilities; skills: PartialSkills };
+            Pick<CharacterSystemData, "build" | "crafting" | "perception" | "proficiencies" | "saves" | "skills">
+        > & { abilities: Abilities };
         const system: SystemDataPartial = this.system;
         const existingBoosts = system.build?.attributes?.boosts;
         const isABP = game.pf2e.variantRules.AutomaticBonusProgression.isEnabled(this);
@@ -420,9 +406,9 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
         attributes.classhp = 0;
 
         // Skills
-        system.skills = R.mapToObj(SKILL_ABBREVIATIONS, (key) => {
-            const rank = Math.clamped(system.skills[key].rank || 0, 0, 4);
-            const attribute = SKILL_EXPANDED[SKILL_DICTIONARY[key]].attribute;
+        system.skills = R.mapToObj([...SKILL_SLUGS], (key) => {
+            const rank = Math.clamp(this._source.system.skills[key]?.rank || 0, 0, 4) as ZeroToFour;
+            const attribute = SKILL_EXPANDED[key].attribute;
             return [key, { rank, attribute, armor: ["dex", "str"].includes(attribute) }];
         });
 
@@ -637,7 +623,7 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
         });
 
         // Skills
-        this.skills = this.prepareSkills();
+        this.prepareSkills();
 
         // Class DC
         this.classDC = null;
@@ -689,7 +675,7 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
         // Resources
         const crafting = system.resources.crafting;
         crafting.infusedReagents.max = Math.floor(crafting.infusedReagents.max) || 0;
-        crafting.infusedReagents.value = Math.clamped(crafting.infusedReagents.value, 0, crafting.infusedReagents.max);
+        crafting.infusedReagents.value = Math.clamp(crafting.infusedReagents.value, 0, crafting.infusedReagents.max);
 
         // Set a roll option for whether this character has a familiar
         if (system.attributes.familiarAbilities.value > 0) {
@@ -733,7 +719,7 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
 
         // Enforce a minimum of -5 for rolled scores and a maximum of 30 for homebrew "mythic" mechanics
         for (const attribute of Object.values(this.system.abilities)) {
-            attribute.mod = Math.clamped(attribute.mod, -5, 10);
+            attribute.mod = Math.clamp(attribute.mod, -5, 10);
             // Record base (integer) modifier: same as stored modifier if in manual mode, and prior to RE
             // modifications otherwise. The final prepared modifier is truncated after application of AE-likes.
             attribute.base = Math.trunc(attribute.mod);
@@ -752,7 +738,7 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
             rollOptionsAll[`attribute:${key}:mod:${mod}`] = true;
         }
 
-        for (const key of SKILL_ABBREVIATIONS) {
+        for (const key of SKILL_SLUGS) {
             const rank = this.system.skills[key].rank;
             rollOptionsAll[`skill:${key}:rank:${rank}`] = true;
         }
@@ -893,17 +879,16 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
         });
     }
 
-    private prepareSkills(): CharacterSkills<this> {
+    private prepareSkills() {
         // rebuild the skills object to clear out any deleted or renamed skills from previous iterations
         const { synthetics, system, wornArmor } = this;
 
-        const skills = R.mapToObj(Array.from(SKILL_ABBREVIATIONS), (shortForm) => {
-            const skill = system.skills[shortForm];
-            const longForm = SKILL_DICTIONARY[shortForm];
-            const label = CONFIG.PF2E.skillList[longForm] ?? longForm;
+        this.skills = R.mapToObj([...SKILL_SLUGS], (skillSlug) => {
+            const skill = system.skills[skillSlug];
+            const label = CONFIG.PF2E.skillList[skillSlug] ?? skillSlug;
 
             const domains = [
-                longForm,
+                skillSlug,
                 `${skill.attribute}-based`,
                 "skill-check",
                 `${skill.attribute}-skill-check`,
@@ -923,11 +908,11 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
 
                 // Set requirements for ignoring the check penalty according to skill
                 armorCheckPenalty.predicate.push({ nor: ["attack", "armor:ignore-check-penalty"] });
-                if (["acrobatics", "athletics"].includes(longForm)) {
+                if (["acrobatics", "athletics"].includes(skillSlug)) {
                     armorCheckPenalty.predicate.push({
                         nor: ["armor:strength-requirement-met", "armor:trait:flexible"],
                     });
-                } else if (longForm === "stealth" && wornArmor.traits.has("noisy")) {
+                } else if (skillSlug === "stealth" && wornArmor.traits.has("noisy")) {
                     armorCheckPenalty.predicate.push({
                         nand: ["armor:strength-requirement-met", "armor:ignore-noisy-penalty"],
                     });
@@ -939,10 +924,10 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
             }
 
             // Add a penalty for attempting to Force Open without a crowbar or similar tool
-            if (longForm === "athletics") modifiers.push(createForceOpenPenalty(this, domains));
+            if (skillSlug === "athletics") modifiers.push(createForceOpenPenalty(this, domains));
 
             const statistic = new Statistic(this, {
-                slug: longForm,
+                slug: skillSlug,
                 label,
                 rank: skill.rank,
                 attribute: skill.attribute,
@@ -952,18 +937,14 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
                 check: { type: "skill-check" },
             }) as CharacterSkill<this>;
 
-            system.skills[shortForm] = fu.mergeObject(statistic.getTraceData(), system.skills[shortForm]);
-
-            return [longForm, statistic];
+            return [skillSlug, statistic];
         });
 
-        // Lore skills
+        // Add Lore skills to skill statistics
         for (const loreItem of this.itemTypes.lore) {
-            // normalize skill name to lower-case and dash-separated words
             const longForm = sluggify(loreItem.name);
             const rank = loreItem.system.proficient.value;
-
-            const statistic = new Statistic(this, {
+            this.skills[longForm as SkillSlug] = new Statistic(this, {
                 slug: longForm,
                 label: loreItem.name,
                 rank,
@@ -972,19 +953,23 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
                 lore: true,
                 check: { type: "skill-check" },
             }) as CharacterSkill<this>;
-
-            skills[longForm as SkillLongForm] = statistic;
-            system.skills[longForm as SkillAbbreviation] = {
-                ...statistic.getTraceData(),
-                armor: false,
-                attribute: "int",
-                rank,
-                lore: true,
-                itemID: loreItem.id,
-            };
         }
 
-        return skills;
+        // Create trace skill data in system data and omit unprepared skills
+        type GappyLoreItems = Partial<Record<string, LorePF2e<this>>>;
+        const loreItems: GappyLoreItems = R.mapToObj(this.itemTypes.lore, (l) => [sluggify(l.name), l]);
+        this.system.skills = R.mapToObj(Object.entries(this.skills), ([key, statistic]) => {
+            const loreItem = statistic.lore ? loreItems[statistic.slug] : null;
+            const baseData = this.system.skills[key] ?? {};
+            const data: CharacterSkillData = fu.mergeObject(baseData, {
+                ...statistic.getTraceData(),
+                rank: statistic.rank,
+                armor: baseData.armor ?? false,
+                itemID: loreItem?.id ?? null,
+                lore: !!statistic.lore,
+            });
+            return [key, data];
+        });
     }
 
     override prepareSpeed(movementType: "land"): CreatureSpeeds;
@@ -1467,8 +1452,12 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
 
         // Show the ammo list if the weapon requires ammo
         if (weapon.ammoRequired > 0) {
-            const compatible = ammos.filter((a) => a.isAmmoFor(weapon));
-            const incompatible = ammos.filter((a) => !a.isAmmoFor(weapon));
+            const compatible = ammos
+                .filter((a) => a.isAmmoFor(weapon))
+                .map((a) => ({ id: a.id, label: `${a.name} (${a.quantity})` }));
+            const incompatible = ammos
+                .filter((a) => !a.isAmmoFor(weapon))
+                .map((a) => ({ id: a.id, label: `${a.name} (${a.quantity})` }));
             const ammo = weapon.ammo;
             const selected = ammo ? { id: ammo.id, compatible: ammo.isAmmoFor(weapon) } : null;
             action.ammunition = { compatible, incompatible, selected };
@@ -1476,11 +1465,11 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
 
         action.breakdown = action.modifiers
             .filter((m) => m.enabled)
-            .map((m) => `${m.label} ${m.modifier < 0 ? "" : "+"}${m.modifier}`)
+            .map((m) => `${m.label} ${m.signedValue}`)
             .join(", ");
 
         // Multiple attack penalty
-        const createMAPenalty = (data: MultipleAttackPenaltyData, increases: ZeroToTwo, rollOptions: Set<string>) => {
+        const createMAPenalty = (data: MultipleAttackPenaltyData, increases: ZeroToTwo) => {
             if (increases === 0) return null;
             const penalty = new ModifierPF2e({
                 slug: data.slug,
@@ -1488,7 +1477,6 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
                 modifier: data[`map${increases}`],
                 adjustments: extractModifierAdjustments(synthetics.modifierAdjustments, attackDomains, data.slug),
             });
-            adjustModifiers([penalty], new Set(rollOptions));
             return penalty;
         };
         const initialMAPs = calculateMAPs(weapon, { domains: attackDomains, options: initialRollOptions });
@@ -1504,7 +1492,9 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
 
         action.variants = ([0, 1, 2] as const).map((mapIncreases) => ({
             get label(): string {
-                const penalty = createMAPenalty(initialMAPs, mapIncreases, initialRollOptions);
+                const penalty = createMAPenalty(initialMAPs, mapIncreases);
+                adjustModifiers(R.filter([penalty], R.isTruthy), initialRollOptions);
+
                 return penalty
                     ? game.i18n.format("PF2E.MAPAbbreviationValueLabel", {
                           value: signedInteger(action.totalModifier + penalty.value),
@@ -1548,8 +1538,11 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
 
                 const statistic = context.origin.statistic ?? action;
                 const maps = calculateMAPs(context.origin.item, { domains: context.domains, options: context.options });
-                const maPenalty = createMAPenalty(maps, mapIncreases, context.options);
-                const allModifiers = R.compact([maPenalty, params.modifiers, context.origin.modifiers].flat());
+                const maPenalty = createMAPenalty(maps, mapIncreases);
+                const allModifiers = R.filter(
+                    [maPenalty, params.modifiers, context.origin.modifiers].flat(),
+                    R.isTruthy,
+                );
                 const check = checkModifiers[mapIncreases](statistic, allModifiers);
 
                 // Check whether target is out of maximum range; abort early if so
@@ -1830,7 +1823,7 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
 
     protected override async _preUpdate(
         changed: DeepPartial<CharacterSource>,
-        options: CreatureUpdateContext<TParent>,
+        options: CreatureUpdateOperation<TParent>,
         user: UserPF2e,
     ): Promise<boolean | void> {
         const isFullReplace = !((options.diff ?? true) && (options.recursive ?? true));
@@ -1846,10 +1839,14 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
         if (!changed.system) return super._preUpdate(changed, options, user);
 
         // Clamp level, allowing for level-0 variant rule and enough room for homebrew "mythical" campaigns
-        if (changed.system.details?.level || changed.system.build?.attributes) {
+        const newLevel = changed.system.details?.level?.value ?? this.level;
+        const attributeChanged =
+            !!changed.system.build?.attributes &&
+            !R.isEmpty(fu.diffObject(this._source.system.build?.attributes ?? {}, changed.system.build.attributes));
+        if (newLevel !== this.level || attributeChanged) {
             const level = changed.system.details?.level;
-            if (typeof level?.value === "number") {
-                level.value = Math.clamped(Number(level.value) || 0, 0, 30) || 0;
+            if (level) {
+                level.value = Math.clamp(newLevel, 0, 30);
             }
 
             // Adjust hit points if level is changing
@@ -1870,7 +1867,7 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
         if (changed.system.resources?.crafting?.infusedReagents?.value !== undefined) {
             const infusedReagents = changed.system.resources.crafting.infusedReagents;
             const max = Math.max(0, this.system.resources.crafting.infusedReagents.max || 0);
-            infusedReagents.value = Math.clamped(Math.floor(infusedReagents.value) || 0, 0, max);
+            infusedReagents.value = Math.clamp(Math.floor(infusedReagents.value) || 0, 0, max);
         }
 
         // Clamp Stamina and Resolve
@@ -1879,7 +1876,7 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
             if (changed.system.attributes?.hp?.sp) {
                 changed.system.attributes.hp.sp.value =
                     Math.floor(
-                        Math.clamped(
+                        Math.clamp(
                             changed.system.attributes.hp.sp?.value ?? 0,
                             0,
                             this.system.attributes.hp.sp?.max ?? 0,
@@ -1891,7 +1888,7 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
             if (changed.system.resources?.resolve) {
                 changed.system.resources.resolve.value =
                     Math.floor(
-                        Math.clamped(
+                        Math.clamp(
                             changed.system.resources.resolve.value ?? 0,
                             0,
                             this.system.resources.resolve?.max ?? 0,
@@ -1906,7 +1903,6 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
         if (typeof xp.max === "number") xp.max = Math.max(xp.max, 1);
 
         // Add or remove class features as necessary, appropriate to the PC's level
-        const newLevel = changed.system.details?.level?.value ?? this.level;
         const actorClass = this.class;
         if (actorClass && newLevel !== this.level) {
             const current = this.itemTypes.feat.filter((feat) => feat.category === "classfeature");
@@ -1931,7 +1927,7 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
         for (const property of ["playerNumber", "characterNumber"] as const) {
             if (typeof changed.system.pfs?.[property] === "number") {
                 const [min, max] = property === "playerNumber" ? [1, 9_999_999] : [2001, 9999];
-                changed.system.pfs[property] = Math.clamped(changed.system.pfs[property] || 0, min, max);
+                changed.system.pfs[property] = Math.clamp(changed.system.pfs[property] || 0, min, max);
             } else if (changed.system.pfs && changed.system.pfs[property] !== null) {
                 changed.system.pfs[property] = this.system.pfs[property] ?? null;
             }

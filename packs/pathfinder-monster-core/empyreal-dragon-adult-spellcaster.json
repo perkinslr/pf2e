@@ -35,23 +35,18 @@
                         "max": 5,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "UKNFfF4EBEO8UujK"
                             },
                             {
-                                "expended": false,
                                 "id": "OI8Q102dnLMeJxZ8"
                             },
                             {
-                                "expended": false,
                                 "id": "8B5rDxozwOJboTwt"
                             },
                             {
-                                "expended": false,
                                 "id": "M0vKt61yj9jn7gk0"
                             },
                             {
-                                "expended": false,
                                 "id": "qCS84kEznVN0SAjB"
                             }
                         ]
@@ -60,15 +55,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "OqDyvLUKyOq7E5jT"
                             },
                             {
-                                "expended": false,
                                 "id": "802gActp136ltvPm"
                             },
                             {
-                                "expended": false,
                                 "id": "uVT3nLpCOy95gWSr"
                             }
                         ]
@@ -77,15 +69,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "PocVesMgTfNnQ2X0"
                             },
                             {
-                                "expended": false,
                                 "id": "GNFam0ZebEGMilUX"
                             },
                             {
-                                "expended": false,
                                 "id": "19HyuKBSKzLnWeae"
                             }
                         ]
@@ -94,15 +83,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "lbDV1fnUESOvBOSZ"
                             },
                             {
-                                "expended": false,
                                 "id": "SSv7kakq42FFE6bA"
                             },
                             {
-                                "expended": false,
                                 "id": "t4QCb2h5z6Auy7uc"
                             }
                         ]
@@ -111,15 +97,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "6GxYqfXXrYHeIBLw"
                             },
                             {
-                                "expended": false,
                                 "id": "hOSEifKV75xTMF6Z"
                             },
                             {
-                                "expended": false,
                                 "id": "OAvjatvyRdtCXd1x"
                             }
                         ]
@@ -128,15 +111,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "t3LgQ2ZZATbceV0D"
                             },
                             {
-                                "expended": false,
                                 "id": "PocVesMgTfNnQ2X0"
                             },
                             {
-                                "expended": false,
                                 "id": "N32QkRZUipyGIvfU"
                             }
                         ]
@@ -145,15 +125,12 @@
                         "max": 3,
                         "prepared": [
                             {
-                                "expended": false,
                                 "id": "2Vicu3lnFqcZ6V6K"
                             },
                             {
-                                "expended": false,
                                 "id": "6GxYqfXXrYHeIBLw"
                             },
                             {
-                                "expended": false,
                                 "id": "Vp6Y0x4r7ze6xkmH"
                             }
                         ]
@@ -596,7 +573,7 @@
                 "rules": [],
                 "slug": "sending",
                 "target": {
-                    "value": "1 creature with whom you are familiar"
+                    "value": "1 creature you know well"
                 },
                 "time": {
                     "value": "3"
@@ -994,7 +971,7 @@
                     }
                 },
                 "description": {
-                    "value": "<p>You designate an area in which lies are revealed. Creatures in the area also take a –2 status penalty to Deception checks. Each time a creature in the area speaks a true statement, the soft ring of a bell sounds in the area. Creatures are aware of the magic; therefore, they can avoid answering questions to which they would normally respond with a lie, or they can be evasive as long as they remain within the boundaries of the truth. If a creature is in the area when the spell is cast or later enters the area, that creature attempts a Will save. It uses the results of this initial save if it leaves and reenters the area.</p>\n<hr />\n<p><strong>Critical Success</strong> The target is so convincing that the bell rings even if they lie.</p>\n<p><strong>Success</strong> If the target lies and succeeds at their Deception check against all targets, the bell still rings.</p>\n<p><strong>Failure</strong> The bell accurately sees through their deception and will never ring if they lie</p>"
+                    "value": "<p>You designate an area in which lies are revealed. Creatures in the area also take a –2 status penalty to Deception checks. Each time a creature in the area speaks a true statement, the soft ring of a bell sounds in the area. Creatures are aware of the magic; therefore, they can avoid answering questions to which they would normally respond with a lie, or they can be evasive as long as they remain within the boundaries of the truth. If a creature is in the area when the spell is cast or later enters the area, that creature attempts a Will save. It uses the results of this initial save if it leaves and reenters the area.</p>\n<hr />\n<p><strong>Critical Success</strong> The target is so convincing that the bell rings even if they lie.</p>\n<p><strong>Success</strong> If the target lies and succeeds at their Deception check against all targets, the bell still rings.</p>\n<p><strong>Failure</strong> The bell accurately sees through their deception and will never ring if they lie.</p>"
                 },
                 "duration": {
                     "sustained": false,
@@ -1939,7 +1916,7 @@
                 "damage": {},
                 "defense": null,
                 "description": {
-                    "value": "<p>You ward a creature with protective energy that deters attacks. Creatures attempting to attack the target must attempt a Will save each time. If the target uses a hostile action, the spell ends.</p>\n<hr />\n<p><strong>Critical Success</strong> <em>Sanctuary </em>ends.</p>\n<p><strong>Success</strong> The creature can attempt its attack and any other attacks against the target this turn.</p>\n<p><strong>Failure</strong> The creature can't attack the target and wastes the action. It can't attempt further attacks against the target this turn.</p>\n<p><strong>Critical Failure</strong> The creature wastes the action and can't attempt to attack the target for the rest of <em>sanctuary</em>'s duration.</p>"
+                    "value": "<p>You ward a creature with protective energy that deters attacks. Creatures attempting to attack the target must attempt a Will save each time. If the target uses a hostile action, the spell ends.</p>\n<hr />\n<p><strong>Critical Success</strong> <em>Sanctuary</em> ends.</p>\n<p><strong>Success</strong> The creature can attempt its attack and any other attacks against the target this turn.</p>\n<p><strong>Failure</strong> The creature can't attack the target and wastes the action. It can't attempt further attacks against the target this turn.</p>\n<p><strong>Critical Failure</strong> The creature wastes the action and can't attempt to attack the target for the rest of <em>sanctuary</em>'s duration.</p>"
                 },
                 "duration": {
                     "sustained": false,
