@@ -81,7 +81,7 @@ export class InventoryBulk {
     }
 
     static computeTotalBulk(items: PhysicalItemPF2e[], actorSize: Size): Bulk {
-        items = this.#flattenNonStowing(items);
+        items = this.#flattenNonStowing(items).filter(item=>item.system.equipped.carryType !== "dropped");
 
         // Figure out which items have stack groups and which don't
         const nonStackingItems = items.filter(
