@@ -119,6 +119,9 @@ class CheckPF2e {
         const isReroll = context.isReroll ?? false;
         if (isReroll) context.rollTwice = false;
         const substitutions = context.substitutions ?? [];
+        const isflat = context.type === "flat-check";
+        const droll = isflat ? "1d20" : "3d6";
+        const tdroll = isflat ? "2d20" : "{3d6,3d6}";
 
         // Acquire the d20 roll expression and resolve fortune/misfortune effects
         const [dice, tagsFromDice] = ((): [string, string[]] => {
@@ -143,7 +146,7 @@ class CheckPF2e {
                     check.calculateTotal(rollOptions);
                 }
 
-                return ["1d20", ["PF2E.TraitFortune", "PF2E.TraitMisfortune"]];
+                return [droll, ["PF2E.TraitFortune", "PF2E.TraitMisfortune"]];
             } else if (substitution) {
                 const effectType = {
                     fortune: "PF2E.TraitFortune",
@@ -156,11 +159,11 @@ class CheckPF2e {
 
                 return [substitution.value.toString(), [extraTag]];
             } else if (context.rollTwice === "keep-lower") {
-                return ["2d20kl", ["PF2E.TraitMisfortune"]];
+                return [tdroll + "kl", ["PF2E.TraitMisfortune"]];
             } else if (context.rollTwice === "keep-higher") {
-                return ["2d20kh", ["PF2E.TraitFortune"]];
+                return [tdroll + "kh", ["PF2E.TraitFortune"]];
             } else {
-                return ["1d20", []];
+                return [droll, []];
             }
         })();
         extraTags.push(...tagsFromDice);
@@ -218,7 +221,7 @@ class CheckPF2e {
                     }, {} as DegreeAdjustmentsRecord) ?? {}
             );
         })();
-        const degree = context.dc ? new DegreeOfSuccess(roll, context.dc, dosAdjustments) : null;
+        const degree = context.dc ? new DegreeOfSuccess(roll, context.dc, dosAdjustments, isflat) : null;
 
         if (degree) {
             context.outcome = DEGREE_OF_SUCCESS_STRINGS[degree.value];
@@ -555,7 +558,7 @@ class CheckPF2e {
                   parsedFlavor.innerHTML = oldFlavor;
                   const targeting = actor.uuid === context.origin?.actor;
                   const self = targeting ? context.origin : context.target;
-                  const opposer = context.target?.actor === actor.uuid ? context.origin : context.target;
+                  const opposer = context.target?.actor === actor.uuid ? context.target : context.origin;
                   const targetFlavor = await this.#createResultFlavor({ degree, self, opposer, targeting });
                   if (targetFlavor) {
                       htmlQuery(parsedFlavor, ".target-dc-result")?.replaceWith(targetFlavor);
@@ -616,7 +619,7 @@ class CheckPF2e {
      * @param isOld This is the old roll render, so remove damage or other buttons
      */
     static async renderReroll(roll: Rolled<Roll>, { isOld }: { isOld: boolean }): Promise<string> {
-        const die = roll.dice.find((d): d is Die => d instanceof foundry.dice.terms.Die && d.faces === 20);
+        const die = roll.dice.find((d): d is Die => d instanceof foundry.dice.terms.Die);
         if (typeof die?.total !== "number") throw ErrorPF2e("Unexpected error inspecting d20 term");
 
         const html = await roll.render();

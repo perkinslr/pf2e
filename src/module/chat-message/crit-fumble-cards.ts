@@ -9,10 +9,10 @@ export class CriticalHitAndFumbleCards {
         if (message.isAuthor && message.isContentVisible) {
             const type = message.flags.pf2e.context?.type ?? "";
             const firstDie = message.rolls.at(0)?.dice[0];
-            if (firstDie && firstDie.faces === 20 && this.rollTypes.includes(type)) {
-                if (firstDie.total === 20) {
+            if (firstDie && this.rollTypes.includes(type)) {
+                if (firstDie.total === (firstDie.faces ?? 0) * (firstDie.number ?? 0)) {
                     this.automaticDraw("critTable");
-                } else if (firstDie.total === 1) {
+                } else if (firstDie.total === firstDie.number) {
                     this.automaticDraw("fumbleTable");
                 }
             }

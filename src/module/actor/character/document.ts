@@ -539,13 +539,13 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
             const ancestryHP = system.attributes.ancestryhp;
             const classHP = system.attributes.classhp;
             const hitPoints = system.attributes.hp;
-            const modifiers = [new ModifierPF2e("PF2E.AncestryHP", ancestryHP, "untyped")];
+            const modifiers = [new ModifierPF2e("PF2E.AncestryHP", Math.floor(ancestryHP / 2), "untyped")];
 
             if (game.pf2e.settings.variants.stamina) {
                 const halfClassHp = Math.floor(classHP / 2);
                 system.attributes.hp.sp = {
                     value: system.attributes.hp.sp?.value ?? 0,
-                    max: (halfClassHp + system.abilities.con.mod) * this.level,
+                    max: (halfClassHp + system.abilities.con.mod) * this.level + Math.ceil(ancestryHP / 2),
                 };
                 system.resources.resolve = {
                     value: system.resources.resolve?.value ?? 0,
