@@ -976,6 +976,11 @@ class ActorPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e | n
             skipIWR = true;
         }
 
+        const rawDamage = typeof damage === "number"
+                ? damage : damage.total;
+
+        
+
         // Round damage and healing (negative values) toward zero
         const result: IWRApplicationData =
             typeof damage === "number"
@@ -1082,13 +1087,13 @@ class ActorPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e | n
                 : false;
 
         const shieldHardness = shieldBlock ? actorShield?.hardness ?? 0 : 0;
-        const damageAbsorbedByShield = finalDamage > 0 ? Math.min(shieldHardness, finalDamage) : 0;
+        const damageAbsorbedByShield = rawDamage > 0 ? Math.min(shieldHardness, rawDamage) : 0;
         const { heldShield } = this;
         // The blocking shield may not be the held shield, such as in when the Shield spell is in play
         const blockingShield = heldShield?.id === actorShield?.itemId ? heldShield : null;
         const currentShieldHP = blockingShield ? blockingShield._source.system.hp.value : actorShield?.hp.value ?? 0;
         const shieldDamage = shieldBlock
-            ? Math.min(currentShieldHP, Math.abs(finalDamage) - damageAbsorbedByShield)
+            ? Math.min(currentShieldHP, Math.abs(rawDamage) - damageAbsorbedByShield)
             : 0;
 
         // Reduce damage by actor hardness
