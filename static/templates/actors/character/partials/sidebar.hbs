@@ -83,19 +83,17 @@
             </div>
         </li>
         <li class="resolve">
-            <label for="{{options.id}}-pc-resolve" class="sidebar_label">{{localize "PF2E.ResolvePointsShortLabel"}}</label>
+            <label for="{{options.id}}-pc-resolve" class="sidebar_label">{{localize "PF2E.TotalDamageTaken"}}</label>
             <div class="hp-max stamina-group">
                 <input
                     id="{{options.id}}-pc-resolve"
                     class="left"
                     type="number"
                     min="0"
-                    max="{{data.resources.resolve.max}}"
-                    name="system.resources.resolve.value"
-                    value="{{data.resources.resolve.value}}"
+                    max="10000"
+                    name="system.attributes.hp.dt.value"
+                    value="{{data.attributes.hp.dt.value}}"
                 />
-                <span class="divider">&sol;</span>
-                <input class="right" type="number" value="{{data.resources.resolve.max}}" disabled="disabled" />
             </div>
         </li>
     </ol>

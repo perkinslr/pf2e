@@ -94,6 +94,7 @@ interface CharacterAttributesSource extends ActorAttributesSource {
         temp: number;
         /** Stamina points: present if Stamina variant is enabled  */
         sp?: { value: number };
+        dt?: { value: number };
     };
     speed: {
         value: number;
@@ -486,6 +487,7 @@ interface CharacterHitPoints extends HitPointsStatistic {
     recoveryMultiplier: number;
     recoveryAddend: number;
     sp?: ValueAndMax;
+    dt?: { value: number } ;
 }
 
 export type {

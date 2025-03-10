@@ -103,6 +103,8 @@ interface ActorAttributes extends ActorAttributesSource {
 interface ActorHitPoints extends Required<BaseHitPointsSource> {
     unrecoverable: number;
     negativeHealing: boolean;
+    sp?: { value: number, max: number};
+    dt?: { value: number } ;
 }
 
 interface ActorDetails extends ActorDetailsSource {

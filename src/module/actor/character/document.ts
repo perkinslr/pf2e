@@ -547,6 +547,9 @@ class CharacterPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e
                     value: system.attributes.hp.sp?.value ?? 0,
                     max: (halfClassHp + system.abilities.con.mod) * this.level + Math.ceil(ancestryHP / 2),
                 };
+                system.attributes.hp.dt = {
+                    value: system.attributes.hp.dt?.value ?? 0
+                };
                 system.resources.resolve = {
                     value: system.resources.resolve?.value ?? 0,
                     max: system.abilities[system.details.keyability.value].mod,

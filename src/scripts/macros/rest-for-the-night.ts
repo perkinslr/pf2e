@@ -134,10 +134,20 @@ export async function restForTheNight(options: RestForTheNightOptions): Promise<
         // Stamina points
         if (game.pf2e.settings.variants.stamina) {
             const stamina = attributes.hp.sp ?? { value: 0, max: 0 };
+            const damageTaken = attributes.hp.dt ?? { value: 0 };
             const resolve = resources.resolve ?? { value: 0, max: 0 };
             if (stamina.value < stamina.max) {
                 actorUpdates.attributes.hp.sp = { value: stamina.max };
                 statements.push(localize("Message.StaminaPoints"));
+            }
+            if (damageTaken.value > 0) {
+                const ndt = Math.max(0, damageTaken.value - maxRestored * 4);
+                actorUpdates.attributes.hp.dt = { value: ndt };
+                const tmhp = Math.floor(attributes.hp.max - ndt / 2);
+                statements.push(localize("Message.TotalDamageTaken", {tmpMaxHP: tmhp}));
+                if (actorUpdates.attributes.hp.value > tmhp) {
+                    actorUpdates.attributes.hp.value = tmhp;
+                }
             }
             if (resolve.value < resolve.max) {
                 actorUpdates.resources.resolve = { value: resolve.max };

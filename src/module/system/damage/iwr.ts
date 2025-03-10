@@ -11,9 +11,9 @@ import type { DamageType, ImmunityRedirect, ResistanceRedirect } from "./types.t
 /** Apply an actor's IWR applications to an evaluated damage roll's instances */
 function applyIWR(actor: ActorPF2e, roll: Rolled<DamageRoll>, rollOptions: Set<string>): IWRApplicationData {
     // Skip the whole exercise if the actor is dead
-    if (actor.isDead) {
-        return { finalDamage: 0, applications: [], persistent: [] };
-    }
+    //if (actor.isDead) {
+    //    return { finalDamage: 0, applications: [], persistent: [] };
+    //}
 
     if (!game.pf2e.settings.iwr) {
         return {

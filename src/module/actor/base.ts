@@ -1133,11 +1133,12 @@ class ActorPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e | n
                 adjustment: -1 * damageAbsorbedByActor,
             });
         }
-
         const damageResult = this.calculateHealthDelta({
             hp: hitPoints,
-            sp: this.isOfType("character") ? this.attributes.hp.sp : null,
+            sp: this.attributes.hp?.sp ?? null,
+            dt: this.attributes.hp?.dt ?? null,
             delta: finalDamage - damageAbsorbedByShield - damageAbsorbedByActor,
+            unrecoverable: this.attributes.hp?.unrecoverable ?? 0,
         });
 
         // Save the pre-update state to calculate undo values
@@ -1151,7 +1152,7 @@ class ActorPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e | n
             );
         }
 
-        const staminaMax = this.isOfType("character") ? this.attributes.hp.sp?.max ?? 0 : 0;
+        const staminaMax = this.attributes.hp?.sp?.max ?? 0;
         const instantDeath = ((): string | null => {
             if (damageResult.totalApplied <= 0 || damageResult.updates["system.attributes.hp.value"] !== 0) {
                 return null;
@@ -1516,10 +1517,18 @@ class ActorPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e | n
     private calculateHealthDelta(args: {
         hp: { max: number; value: number; temp: number };
         sp?: Maybe<{ max: number; value: number }>;
+        dt?: Maybe<{ value: number }>;
         delta: number;
+        unrecoverable: number;
     }) {
         const updates: Record<string, number> = {};
-        const { hp, sp, delta } = args;
+        var { hp, sp, dt, delta, unrecoverable } = args;
+        if (sp == null) {
+          sp = {value: 0, max: 0};
+        }
+        if (dt == null) {
+          dt = {value: 0};
+        }
         if (hp.max === 0) return { updates, totalApplied: 0 };
 
         const appliedToTemp = ((): number => {
@@ -1530,22 +1539,79 @@ class ActorPF2e<TParent extends TokenDocumentPF2e | null = TokenDocumentPF2e | n
             return applied;
         })();
 
-        const appliedToSP = ((): number => {
+        const healedToHP = ((): number => {
+            const staminaEnabled = !!sp && !!dt && game.pf2e.settings.variants.stamina;
+            if (!staminaEnabled || delta > 0) {
+              return 0;
+            }
+            
+            const tempMaxHP = Math.floor(hp.max - dt.value / 2);
+            if ((hp.value-delta) <= tempMaxHP) {
+              updates["system.attributes.hp.value"] = hp.value - delta;
+              return -delta;
+            }
+            const healingApplied = tempMaxHP - hp.value;
+            updates["system.attributes.hp.value"] = tempMaxHP;
+            return healingApplied;
+        })();
+        console.log(args);
+
+        var appliedToSP = ((): number => {
             const staminaEnabled = !!sp && game.pf2e.settings.variants.stamina;
-            if (!staminaEnabled || delta <= 0) return 0;
-            const remaining = delta - appliedToTemp;
-            const applied = Math.min(sp.value, remaining);
-            updates["system.attributes.hp.sp.value"] = Math.max(sp.value - applied, 0);
+            if (!staminaEnabled) return 0;
+            const remaining = delta - appliedToTemp + healedToHP;
+            var applied;
+            if (delta < 0) {
+              applied = Math.max(sp.value - sp.max, remaining)
+            }
+            else {
+              applied = Math.min(sp.value, remaining);
+            }
+            updates["system.attributes.hp.sp.value"] = sp.value - applied;
 
             return applied;
         })();
-
         const appliedToHP = ((): number => {
-            const remaining = delta - appliedToTemp - appliedToSP;
-            updates["system.attributes.hp.value"] = Math.clamp(hp.value - remaining, 0, hp.max);
+            console.log([sp, delta, appliedToTemp, appliedToSP]);
+            const staminaEnabled = !!sp && game.pf2e.settings.variants.stamina;
+            var remaining = delta - appliedToTemp - appliedToSP;
+            if (remaining <= 0 && staminaEnabled) {
+              return 0;
+            }
+
+            var nchp = Math.clamp(hp.value - remaining, 0, hp.max);
+            console.log([nchp]);
+
+            if (staminaEnabled && sp.max == 0 || sp.max === null) {
+              console.log("recalculating stamina");
+              const nmhp = Math.floor(hp.max / 2);
+              const nsp = {value: 0, max: Math.floor(hp.max / 2)} ;
+              
+              updates["system.attributes.hp.max"] = nmhp
+              if (nchp > nmhp) {
+                appliedToSP += remaining;
+                nsp.value = nchp - nmhp;
+                nchp = nmhp;
+                console.log([1595, nsp.value, nchp, remaining, nmhp]);
+                remaining = 0;
+              }
+              else {
+                console.log([1599, hp.max / 2]);
+                appliedToSP += Math.ceil(hp.max / 2);
+                remaining -= Math.ceil(hp.max / 2);
+              }
+              updates["system.attributes.hp.sp.value"] = nsp.value;
+              updates["system.attributes.hp.sp.max"] = nsp.max;
+            }
+
+            updates["system.attributes.hp.value"] = nchp;
+            updates["system.attributes.hp.dt.value"] = (dt?.value ?? 0) + remaining;
+            if (!staminaEnabled) {
+              updates["system.attributes.hp.unrecoverable"] = unrecoverable + Math.floor(remaining / 2);
+            }
             return remaining;
         })();
-        const totalApplied = appliedToTemp + appliedToSP + appliedToHP;
+        const totalApplied = appliedToTemp + appliedToSP + appliedToHP - healedToHP;
 
         return { updates, totalApplied };
     }

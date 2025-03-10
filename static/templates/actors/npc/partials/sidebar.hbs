@@ -97,7 +97,43 @@
             {{/with}}
         </span>
     </header>
-
+    {{!-- Stamina --}}
+    <div class="side-bar-section-content">
+        <div class="hp-temp labeled-field">
+            <label for="{{document.uuid}}-stamina">{{localize "PF2E.StaminaPointsShortLabel"}}</label>
+            <input
+                class="hp-temp-value"
+                type="number"
+                name="system.attributes.hp.sp.value"
+                id="{{document.uuid}}-stamina"
+                value="{{data.attributes.hp.sp.value}}"
+                placeholder="0"
+                />
+            <span class="slash">/</span>
+            <input
+                class="hp-temp-value"
+                type="number"
+                name="system.attributes.hp.sp.max"
+                id="{{document.uuid}}-stamina-max"
+                value="{{data.attributes.hp.sp.max}}"
+                placeholder="0"
+                />
+        </div>
+    </div>
+    {{!-- Damage Taken --}}
+    <div class="side-bar-section-content">
+        <div class="hp-temp labeled-field">
+            <label for="{{document.uuid}}-dt-hp">{{localize "PF2E.TotalDamageTaken"}}</label>
+            <input
+                class="hp-temp-value"
+                type="number"
+                name="system.attributes.hp.dt.value"
+                id="{{document.uuid}}-dt-hp"
+                value="{{data.attributes.hp.dt.value}}"
+                placeholder="0"
+            />
+        </div>
+    </div>
     {{!-- Temp HP --}}
     <div class="side-bar-section-content">
         <div class="hp-temp labeled-field">

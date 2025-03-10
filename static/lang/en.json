@@ -83,6 +83,7 @@
                     "Frequencies": "Action frequencies refreshed.",
                     "HitPoints": "{hitPoints} hit points restored.",
                     "HitPointsSingle": "{hitPoints} hit point restored.",
+                    "TotalDamageTaken": "{tmpMaxHP} hit point maximum for the day.",
                     "InfusedReagents": "Infused reagents restored.",
                     "Resolve": "Resolve restored.",
                     "SpellSlots": "All spell slots restored.",
@@ -3177,6 +3178,7 @@
             "WarnNoHeroPoint": "{name} has no Hero Points"
         },
         "ResistancesLabel": "Resistances",
+        "TotalDamageTaken": "Damage Taken",
         "ResolvePointsShortLabel": "Resolve",
         "RestoreSpellTitle": "Restore Spell",
         "RevertDamage": {
